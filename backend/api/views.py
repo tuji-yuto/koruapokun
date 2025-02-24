@@ -1,3 +1,6 @@
+# APIビュー定義
+# クライアントからのリクエストを処理し、適切なレスポンスを返す
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions, generics
@@ -12,11 +15,12 @@ from django.db.models import Sum
 from calendar import monthrange
 from django.http import JsonResponse
 
+
 # ユーザー登録API
 class RegistrationAPI(APIView):
     """
     新規ユーザー登録を処理するAPIビュー
-    POSTリクエストでユーザー情報を受け取り、バリデーション後にDBに保存する
+    POSTリクエストでユーザー情報を受け取り、バリデーション後にDBに保存
     """
     def post(self, request):
         # パスワードをハッシュ化してからシリアライザに渡す
@@ -37,7 +41,7 @@ class HomeDataListCreateAPIView(generics.ListCreateAPIView):
     GET: ログインユーザーの営業データ一覧を取得（日付フィルタ可能）
     POST: 新規営業データを作成
     
-    認証済みユーザーのみアクセス可能で、自分のデータのみ操作できる
+    認証済みユーザーのみアクセス可能で、自分のデータのみ操作可能
     """
     serializer_class = HomeDataSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -85,7 +89,7 @@ class HomeDataRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
 class MonthlyTargetAPIView(generics.RetrieveUpdateAPIView):
     """
     月間目標の取得と更新を行うAPI
-    指定された年月の目標がない場合は新規作成する
+    指定された年月の目標がない場合は新規作成
     """
     serializer_class = MonthlyTargetSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -136,14 +140,27 @@ class CustomTokenVerifyView(TokenViewBase):
             )
 
 
+# 基本サマリーAPI機能
+class BaseSummaryAPI(APIView):
+    """
+    営業実績サマリーの基本機能を提供する抽象クラス
+    各種比率計算のユーティリティメソッドを定義
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def calculate_rate(self, numerator, denominator):
+        """比率を計算（ゼロ除算対策あり）"""
+        if denominator == 0:
+            return 0
+        return round((numerator / denominator) * 100, 1)
+
+
 # 月間実績サマリーAPI
-class MonthlySummaryAPI(APIView):
+class MonthlySummaryAPI(BaseSummaryAPI):
     """
     月間の営業実績サマリーを集計するAPI
     当月の実績と目標に対する進捗状況を計算して返す
     """
-    permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request):
         try:
             # 現在の年月を取得
@@ -231,21 +248,13 @@ class MonthlySummaryAPI(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def calculate_rate(self, numerator, denominator):
-        """比率を計算（ゼロ除算対策あり）"""
-        if denominator == 0:
-            return 0
-        return round((numerator / denominator) * 100, 1)
-
 
 # 日次実績サマリーAPI
-class DailySummaryAPI(APIView):
+class DailySummaryAPI(BaseSummaryAPI):
     """
     当日の営業実績サマリーを集計するAPI
     各種指標の合計と比率を計算して返す
     """
-    permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request):
         # 今日の日付でデータを集計
         today = timezone.localdate()
@@ -277,12 +286,6 @@ class DailySummaryAPI(APIView):
         }
 
         return Response(results)
-
-    def calculate_rate(self, numerator, denominator):
-        """比率を計算（ゼロ除算対策あり）"""
-        if denominator == 0:
-            return 0
-        return round((numerator / denominator) * 100, 1)
 
 
 # ログインユーザー情報API
