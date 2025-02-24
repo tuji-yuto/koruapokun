@@ -1,11 +1,24 @@
+/**
+ * VSCode設定ファイル
+ * プロジェクト固有のエディタ設定を定義
+ * TailwindCSSの統合と最適化のための設定
+ */
 {
+  // 組み込みのCSS検証を無効化
+  // TailwindCSSのユーティリティクラスが誤って警告されるのを防止
   "css.validate": false,
+  
+  // TailwindCSSのクラス名を特定のパターンで認識するための正規表現設定
+  // cvaとcx関数内のクラス名をTailwindCSSが認識できるようにする
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
+  
+  // TypeScriptファイル内でTailwindCSSのインテリセンスを有効化
+  // TypeScriptとTypeScript Reactファイルを適切に処理
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
     "typescriptreact": "javascript"
   }
-} 
+}

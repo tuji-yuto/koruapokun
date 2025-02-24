@@ -1,20 +1,24 @@
 "use client";
 
 /**
- * ホームページモジュール
+ * ホームページコンポーネント
  * 
- * このファイルはアプリケーションのホームページを定義します。
- * ダッシュボード表示のためのメインエントリーポイントとして機能します。
+ * アプリケーションのホームページを定義
+ * ダッシュボード表示のメインエントリーポイント
  */
 
 import dynamic from 'next/dynamic';
 
-// クライアントサイドレンダリングのためにHomeDashboardをdynamicインポート
+// パフォーマンス最適化のためHomeDashboardをクライアントサイドのみでレンダリング
 const HomeDashboard = dynamic(
   () => import("../../components/HomeDashboard"),
-  { ssr: false } // サーバーサイドレンダリングを無効化
+  { ssr: false }
 );
 
+/**
+ * ホームページコンポーネント
+ * ダッシュボードを表示するメインコンテナ
+ */
 export default function HomePage() {
   return (
     <main>

@@ -1,14 +1,21 @@
-'use client';  // Client Componentとして明示的に宣言
+/**
+ * ユーザー登録ページ
+ * 新規ユーザーの登録フォームを表示
+ */
+'use client';
 
-import dynamic from 'next/dynamic'; // dynamic importを使用するためのインポート
+import dynamic from 'next/dynamic';
 
-// dynamic importを利用してクライアントコンポーネントとしてRegistrationFormを読み込む
-const RegistrationForm = dynamic(() => import("../../components/RegistrationForm"), { ssr: false });
+// クライアントサイドのみで実行される登録フォームコンポーネント
+const RegistrationForm = dynamic(
+  () => import("../../components/RegistrationForm"),
+  { ssr: false }
+);
 
 export default function RegisterPage() {
   return (
-    <main>
-      <RegistrationForm /> {/* RegistrationFormコンポーネントを表示 */}
+    <main className="container mx-auto py-8">
+      <RegistrationForm />
     </main>
   );
 }
