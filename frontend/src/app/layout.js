@@ -8,10 +8,8 @@
  */
 
 import { ThemeProvider } from '@mui/material/styles';
-import { darkTheme, lightTheme } from '../theme';
+import { lightTheme } from '../theme';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useMemo } from 'react';
-import { useMediaQuery } from '@mui/material';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -34,14 +32,8 @@ const geistMono = Geist_Mono({
  * アプリケーション全体の共通レイアウト構造提供
  */
 export default function RootLayout({ children }) {
-  // システム設定に基づくダークモード判定
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  
-  // ダークモード設定に応じたテーマ選択（メモ化による最適化）
-  const theme = useMemo(
-    () => prefersDarkMode ? darkTheme : lightTheme,
-    [prefersDarkMode]
-  );
+  // 常にライトテーマを使用
+  const theme = lightTheme;
 
   return (
     <html lang="ja">

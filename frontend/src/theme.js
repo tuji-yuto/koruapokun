@@ -33,24 +33,4 @@ export const lightTheme = createTheme({
       },
     },
   },
-});
-
-export const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#1a1a1a',  // 明るめの黒に変更
-      paper: '#2d2d2d',     // ダークモード用の背景色
-    },
-    primary: {
-      main: '#90caf9',
-    },
-    secondary: {
-      main: '#a5d6a7',
-    },
-    text: {
-      primary: '#e0e0e0',   // 明るいテキスト色
-      secondary: '#b0b0b0',
-    },
-  },
 }); 

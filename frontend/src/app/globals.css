@@ -9,18 +9,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ライトモード（デフォルト）のカラー変数 */
+/* カラー変数（ライトモードのみ） */
 :root {
   --background: #ffffff;  /* 背景色：白 */
   --foreground: #171717;  /* 文字色：濃いグレー */
-}
-
-/* ダークモード時のカラー変数（システム設定に基づく） */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;  /* 背景色：ほぼ黒 */
-    --foreground: #ededed;  /* 文字色：明るいグレー */
-  }
 }
 
 /* 基本的なボディスタイル */
