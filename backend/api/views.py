@@ -12,20 +12,14 @@ from django.db.models import Sum
 from calendar import monthrange
 from django.http import JsonResponse
 
-# ユーザー登録用のAPIビュー
-# 新規ユーザーの登録処理を担当し、バリデーション済みのデータを保存
+# ユーザー登録API
 class RegistrationAPI(APIView):
     """
-    ユーザー登録用の API ビュー。
-    POSTメソッドで新規ユーザーを登録します。
-    
-    処理内容:
-    - リクエストデータのバリデーション
-    - ユーザー情報の保存
-    - 登録成功/失敗のレスポンス返却
+    新規ユーザー登録を処理するAPIビュー
+    POSTリクエストでユーザー情報を受け取り、バリデーション後にDBに保存する
     """
     def post(self, request):
-        # パスワードのハッシュ化
+        # パスワードをハッシュ化してからシリアライザに渡す
         request.data['password'] = make_password(request.data['password'])
         
         serializer = UserSerializer(data=request.data)
@@ -35,90 +29,86 @@ class RegistrationAPI(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# ホーム画面データの一覧取得・作成用APIビュー
-# 認証済みユーザーのみアクセス可能
+# 営業データ一覧・作成API
 class HomeDataListCreateAPIView(generics.ListCreateAPIView):
     """
-    認証済みユーザーのホームデータ一覧の取得と、新規作成を行う API ビュー。
+    営業データの一覧取得と新規作成を行うAPI
     
-    主な機能:
-    - GETメソッド: ログインユーザーのホームデータ一覧を取得
-    - POSTメソッド: 新規ホームデータの作成
+    GET: ログインユーザーの営業データ一覧を取得（日付フィルタ可能）
+    POST: 新規営業データを作成
     
-    セキュリティ:
-    - 認証済みユーザーのみアクセス可能
-    - ユーザーは自身のデータのみ参照/作成可能
+    認証済みユーザーのみアクセス可能で、自分のデータのみ操作できる
     """
     serializer_class = HomeDataSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        # 未認証の場合は空のクエリセットを返す
         if not self.request.user.is_authenticated:
             return HomeData.objects.none()
             
+        # 日付フィルタの取得
         date = self.request.query_params.get('date', None)
         try:
+            # ユーザーに紐づくデータのみ取得
             queryset = HomeData.objects.filter(user=self.request.user)
+            # 日付指定があれば絞り込み
+            if date:
+                queryset = queryset.filter(date=date)
+            return queryset
         except Exception as e:
-            print(f"Database error: {str(e)}")
+            print(f"データベースエラー: {str(e)}")
             return HomeData.objects.none()
-        
-        if date:
-            queryset = queryset.filter(date=date)
-        return queryset
 
     def perform_create(self, serializer):
+        # 作成時にユーザー情報を自動設定
         serializer.save(
             user=self.request.user,
             input_name=self.request.user.username
         )
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-# 更新用ビュー追加
+# 営業データ詳細・更新API
 class HomeDataRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    """
+    営業データの詳細取得と更新を行うAPI
+    認証済みユーザーのみ自分のデータを操作可能
+    """
     serializer_class = HomeDataSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
         return HomeData.objects.filter(user=self.request.user)
 
+
+# 月間目標管理API
 class MonthlyTargetAPIView(generics.RetrieveUpdateAPIView):
+    """
+    月間目標の取得と更新を行うAPI
+    指定された年月の目標がない場合は新規作成する
+    """
     serializer_class = MonthlyTargetSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        """ユーザーの月次目標データを取得"""
+        """ログインユーザーの月次目標データを取得"""
         return MonthlyTarget.objects.filter(user=self.request.user)
 
     def get_object(self):
-        """指定された年月の月次目標を取得または作成"""
-        year_month = self.kwargs.get('year_month')
-        if not year_month:
-            year_month = self.request.query_params.get('year_month')
+        """指定された年月の目標を取得（なければ作成）"""
+        # URLパラメータまたはクエリパラメータから年月を取得
+        year_month = self.kwargs.get('year_month') or self.request.query_params.get('year_month')
         
         if not year_month:
             return None
         
+        # 該当月の目標を取得または作成
         obj, created = MonthlyTarget.objects.get_or_create(
             user=self.request.user,
             year_month=year_month,
             defaults={'target_acquisition': 0}
         )
         return obj
-
-    def update(self, request, *args, **kwargs):
-        """月次目標の更新"""
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
 
     def perform_update(self, serializer):
         """更新時にユーザーと年月を自動設定"""
@@ -127,7 +117,10 @@ class MonthlyTargetAPIView(generics.RetrieveUpdateAPIView):
             year_month=self.kwargs.get('year_month')
         )
 
+
+# トークン検証API
 class CustomTokenVerifyView(TokenViewBase):
+    """JWTトークンの有効性を検証するAPI"""
     serializer_class = TokenVerifySerializer
 
     def post(self, request, *args, **kwargs):
@@ -136,32 +129,28 @@ class CustomTokenVerifyView(TokenViewBase):
             serializer.is_valid(raise_exception=True)
             return Response({}, status=status.HTTP_200_OK)
         except TokenError as e:
-            error_message = e.args[0] if e.args else 'Invalid token'
+            error_message = e.args[0] if e.args else 'トークンが無効です'
             return Response(
                 {'error': error_message},
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
+
+# 月間実績サマリーAPI
 class MonthlySummaryAPI(APIView):
+    """
+    月間の営業実績サマリーを集計するAPI
+    当月の実績と目標に対する進捗状況を計算して返す
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         try:
+            # 現在の年月を取得
             today = timezone.now()
             year, month = today.year, today.month
             
-            # デフォルト値設定
-            default_values = {
-                'total_call': 0,
-                'total_catch': 0,
-                'total_re_call': 0,
-                'total_prospective': 0,
-                'total_approach_ng': 0,
-                'total_product_ng': 0,
-                'total_acquisition': 0
-            }
-            
-            # 集計結果にデフォルト値をマージ
+            # 当月のデータ集計
             monthly_data = HomeData.objects.filter(
                 user=request.user,
                 date__year=year,
@@ -175,64 +164,50 @@ class MonthlySummaryAPI(APIView):
                 total_product_ng=Sum('product_explanation_ng_count'),
                 total_acquisition=Sum('acquisition_count')
             )
+            
+            # Noneを0に変換
             monthly_data = {k: (v if v is not None else 0) for k, v in monthly_data.items()}
 
-            # 月の日数取得（ゼロ除算防止）
+            # 月の日数と経過日数を取得
             try:
                 _, num_days = monthrange(year, month)
-                num_days = num_days if num_days > 0 else 30  # 最低30日を保証
+                num_days = max(num_days, 30)  # 最低30日を保証
+                current_day = max(today.day, 1)  # 最低1日を保証
             except:
                 num_days = 30
+                current_day = 1
 
-            # 経過日数（最低1日を保証）
-            current_day = today.day if today.day > 0 else 1
-
-            # 月次目標取得（存在しない場合は0）
+            # 月次目標を取得
             target_acquisition = MonthlyTarget.objects.filter(
                 user=request.user,
                 year_month=f"{year}-{month:02}"
             ).values_list('target_acquisition', flat=True).first() or 0
 
-            # 一日に必要な獲得数計算（ゼロ除算防止）
-            try:
-                daily_required_acquisition = target_acquisition / num_days
-            except ZeroDivisionError:
-                daily_required_acquisition = 0
-
-            # 獲得率計算（ゼロ除算防止）
-            try:
-                acquisition_rate = (monthly_data['total_acquisition'] / monthly_data['total_catch']) * 100
-            except ZeroDivisionError:
-                acquisition_rate = 0
-
-            # 一日に必要なキャッチ数計算
-            try:
-                daily_required_catch = (daily_required_acquisition * 100) / acquisition_rate
-            except ZeroDivisionError:
-                daily_required_catch = 0
-
-            # 進捗率計算（ゼロ除算防止）
-            try:
-                progress_rate = ((monthly_data['total_acquisition'] / target_acquisition) /
-                                (current_day / num_days)) * 100
-            except ZeroDivisionError:
-                progress_rate = 0
-
-            # 仮想進捗件数
-            try:
-                virtual_progress_count = (current_day / num_days) * target_acquisition
-            except ZeroDivisionError:
-                virtual_progress_count = 0
-
-            # 一日当たり平均獲得数（ゼロ除算防止）
-            try:
-                average_daily_acquisition = monthly_data['total_acquisition'] / current_day
-            except ZeroDivisionError:
-                average_daily_acquisition = 0
-
+            # 各種指標の計算
+            # 獲得率
+            acquisition_rate = self.calculate_rate(monthly_data['total_acquisition'], monthly_data['total_catch'])
+            
+            # 一日あたりの必要獲得数
+            daily_required_acquisition = target_acquisition / num_days if num_days > 0 else 0
+            
+            # 一日あたりの必要キャッチ数
+            daily_required_catch = (daily_required_acquisition * 100) / acquisition_rate if acquisition_rate > 0 else 0
+            
+            # 進捗率（時間経過に対する目標達成率）
+            time_progress = current_day / num_days if num_days > 0 else 0
+            target_progress = monthly_data['total_acquisition'] / target_acquisition if target_acquisition > 0 else 0
+            progress_rate = (target_progress / time_progress) * 100 if time_progress > 0 else 0
+            
+            # 仮想進捗件数（時間経過に応じた理想的な獲得数）
+            virtual_progress_count = time_progress * target_acquisition
+            
+            # 一日あたり平均獲得数
+            average_daily_acquisition = monthly_data['total_acquisition'] / current_day if current_day > 0 else 0
+            
             # 月末獲得予測
             predicted_month_end_acquisition = average_daily_acquisition * num_days
 
+            # 結果の整形
             results = {
                 're_call_rate': self.calculate_rate(monthly_data['total_re_call'], monthly_data['total_catch']),
                 'prospective_rate': self.calculate_rate(monthly_data['total_prospective'], monthly_data['total_catch']),
@@ -257,14 +232,22 @@ class MonthlySummaryAPI(APIView):
             )
 
     def calculate_rate(self, numerator, denominator):
+        """比率を計算（ゼロ除算対策あり）"""
         if denominator == 0:
             return 0
         return round((numerator / denominator) * 100, 1)
 
+
+# 日次実績サマリーAPI
 class DailySummaryAPI(APIView):
+    """
+    当日の営業実績サマリーを集計するAPI
+    各種指標の合計と比率を計算して返す
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
+        # 今日の日付でデータを集計
         today = timezone.localdate()
         daily_data = HomeData.objects.filter(
             user=request.user,
@@ -279,7 +262,11 @@ class DailySummaryAPI(APIView):
             daily_acquisition=Sum('acquisition_count')
         )
 
-        catch_count = daily_data['daily_catch'] or 0
+        # Noneを0に変換
+        daily_data = {k: (v if v is not None else 0) for k, v in daily_data.items()}
+        catch_count = daily_data['daily_catch']
+        
+        # 各種比率を計算
         results = {
             're_call_rate': self.calculate_rate(daily_data['daily_re_call'], catch_count),
             'prospective_rate': self.calculate_rate(daily_data['daily_prospective'], catch_count),
@@ -292,11 +279,18 @@ class DailySummaryAPI(APIView):
         return Response(results)
 
     def calculate_rate(self, numerator, denominator):
+        """比率を計算（ゼロ除算対策あり）"""
         if denominator == 0:
             return 0
         return round((numerator / denominator) * 100, 1)
 
+
+# ログインユーザー情報API
 class CurrentUserAPI(APIView):
+    """
+    現在ログイン中のユーザー情報を返すAPI
+    認証済みユーザーのみアクセス可能
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

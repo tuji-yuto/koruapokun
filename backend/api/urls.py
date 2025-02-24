@@ -1,37 +1,41 @@
-# Django REST frameworkのURL設定
-# APIエンドポイントのルーティングを定義
+# APIエンドポイントのルーティング設定
+# 各機能へのURLパスとビューを紐付ける
 
 from django.urls import path
-from .views import RegistrationAPI, HomeDataListCreateAPIView, HomeDataRetrieveUpdateAPIView, MonthlyTargetAPIView, MonthlySummaryAPI, DailySummaryAPI, CurrentUserAPI
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
 from . import views
+from .views import (
+    RegistrationAPI,
+    HomeDataListCreateAPIView,
+    HomeDataRetrieveUpdateAPIView,
+    MonthlyTargetAPIView,
+    MonthlySummaryAPI,
+    DailySummaryAPI,
+    CurrentUserAPI,
+)
 
-# URLパターンの定義
-# 各エンドポイントとビューを紐付け、名前を付与
+# URLパターン定義
 urlpatterns = [
-    # ユーザー登録用エンドポイント
-    path('register/', RegistrationAPI.as_view(), name='register'),
+    # ユーザー管理関連
+    path('register/', RegistrationAPI.as_view(), name='register'),  # 新規ユーザー登録
+    path('current-user/', CurrentUserAPI.as_view(), name='current-user'),  # ログイン中ユーザー情報取得
     
-    # JWTトークンを使用したログイン認証用エンドポイント
-    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # JWT認証関連
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # ログイン（トークン発行）
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # トークン更新
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # トークン検証
     
-    # JWTトークンのリフレッシュ用エンドポイント
-    # アクセストークンの期限切れ時に使用
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # データ管理関連
+    path('home-data/', HomeDataListCreateAPIView.as_view(), name='home-data-list'),  # 営業データ一覧・作成
+    path('home-data/<int:pk>/', HomeDataRetrieveUpdateAPIView.as_view(), name='home-data-detail'),  # 営業データ詳細・更新
     
-    # JWTトークンの検証用エンドポイント
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    
-    # ホーム画面データのCRUD操作用エンドポイント
-    path('home-data/', HomeDataListCreateAPIView.as_view(), name='home-data-list'),
-    path('home-data/<int:pk>/', HomeDataRetrieveUpdateAPIView.as_view(), name='home-data-detail'),
-    path('monthly-target/', MonthlyTargetAPIView.as_view(), name='monthly-target'),
-    path('monthly-target/<str:year_month>/', views.MonthlyTargetAPIView.as_view(), name='monthly-target-detail'),
-    path('monthly-summary/', MonthlySummaryAPI.as_view(), name='monthly-summary'),
-    path('daily-summary/', DailySummaryAPI.as_view(), name='daily-summary'),
-    path('current-user/', CurrentUserAPI.as_view(), name='current-user'),
+    # 目標・集計関連
+    path('monthly-target/', MonthlyTargetAPIView.as_view(), name='monthly-target'),  # 月間目標管理
+    path('monthly-target/<str:year_month>/', MonthlyTargetAPIView.as_view(), name='monthly-target-detail'),  # 特定月の目標
+    path('monthly-summary/', MonthlySummaryAPI.as_view(), name='monthly-summary'),  # 月間実績サマリー
+    path('daily-summary/', DailySummaryAPI.as_view(), name='daily-summary'),  # 日次実績サマリー
 ]
