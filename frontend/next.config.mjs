@@ -1,4 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+/**
+ * Next.js設定ファイル
+ * このファイルでアプリケーションの基本設定を管理します。
+ * 環境変数、ビルド設定、APIルート、画像最適化などの設定ができます。
+ * 
+ * @type {import('next').NextConfig}
+ */
 
-export default nextConfig;
+// 現在は基本設定のみ使用
+// 必要に応じて環境変数やビルド設定を追加していく
+export default {};

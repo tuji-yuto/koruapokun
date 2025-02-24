@@ -1,14 +1,17 @@
+/**
+ * ESLint設定ファイル
+ * このファイルはフロントエンドコードの品質を保つためのリンターの設定を定義します
+ */
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// ESモジュールでは__dirnameが使えないため、現在のファイルパスから取得
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+// 新しいフラットな設定形式でESLintを構成
+const compat = new FlatCompat({ baseDirectory: __dirname });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
-
-export default eslintConfig;
+// Next.jsの推奨設定（コアウェブバイタル対応含む）を適用
+export default compat.extends("next/core-web-vitals");
