@@ -1,14 +1,3 @@
-"""
-vsproject_backendプロジェクトのDjango設定ファイル。
-
-このファイルには、プロジェクト全体の設定が含まれています。
-開発環境用の設定なので、本番環境では適切に変更してください。
-
-詳細は公式ドキュメントを参照：
-https://docs.djangoproject.com/en/5.1/topics/settings/
-https://docs.djangoproject.com/en/5.1/ref/settings/
-"""
-
 from pathlib import Path
 import os
 from dotenv import load_dotenv
