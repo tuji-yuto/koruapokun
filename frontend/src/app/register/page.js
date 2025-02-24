@@ -14,7 +14,7 @@ const RegistrationForm = dynamic(
 
 export default function RegisterPage() {
   return (
-    <main className="container mx-auto py-8">
+    <main>
       <RegistrationForm />
     </main>
   );

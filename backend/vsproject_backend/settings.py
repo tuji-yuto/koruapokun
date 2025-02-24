@@ -1,3 +1,6 @@
+# Djangoプロジェクトの設定ファイル
+# 環境設定、アプリケーション登録、セキュリティ設定などを管理
+
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -10,52 +13,56 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # セキュリティ関連の設定
-# 注意: 本番環境では必ず変更すること
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')
-DEBUG = True
-ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')  
+DEBUG = True  # デバッグモード有効化
+ALLOWED_HOSTS = []  # アクセスを許可するホスト
 
-# アプリケーション定義
+# インストール済みアプリケーション
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'corsheaders',
-    'rest_framework_simplejwt',
-    'api.apps.ApiConfig',
+    # Djangoデフォルトアプリ
+    'django.contrib.admin',  # 管理サイト
+    'django.contrib.auth',  # 認証システム
+    'django.contrib.contenttypes',  # コンテンツタイプフレームワーク
+    'django.contrib.sessions',  # セッション管理
+    'django.contrib.messages',  # メッセージフレームワーク
+    'django.contrib.staticfiles',  # 静的ファイル管理
+    
+    # サードパーティアプリ
+    'rest_framework',  # REST API構築用フレームワーク
+    'corsheaders',  # クロスオリジンリソース共有
+    'rest_framework_simplejwt',  # JWT認証
+    
+    # プロジェクトアプリ
+    'api.apps.ApiConfig',  # APIアプリケーション
 ]
 
 # ミドルウェア設定
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # CORS対応のため最初に配置
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS対応
+    'django.middleware.security.SecurityMiddleware',  # セキュリティ対策
+    'django.contrib.sessions.middleware.SessionMiddleware',  # セッション管理
+    'django.middleware.common.CommonMiddleware',  # 共通処理
+    'django.middleware.csrf.CsrfViewMiddleware',  # CSRF保護
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # 認証処理
+    'django.contrib.messages.middleware.MessageMiddleware',  # メッセージ処理
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # クリックジャッキング防止
 ]
 
-# URL設定
+# ルートURL設定
 ROOT_URLCONF = 'vsproject_backend.urls'
 
 # テンプレート設定
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # テンプレートエンジン
+        'DIRS': [],  # テンプレート検索ディレクトリ
+        'APP_DIRS': True,  # アプリディレクトリ内のテンプレート使用
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',  # デバッグ情報
+                'django.template.context_processors.request',  # リクエスト情報
+                'django.contrib.auth.context_processors.auth',  # 認証情報
+                'django.contrib.messages.context_processors.messages',  # メッセージ情報
             ],
         },
     },
@@ -65,96 +72,71 @@ TEMPLATES = [
 WSGI_APPLICATION = 'vsproject_backend.wsgi.application'
 
 # データベース設定
-# 環境変数から接続情報を取得
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL使用
+        'NAME': os.getenv('DATABASE_NAME'),  # DB名
+        'USER': os.getenv('DATABASE_USER'),  # DBユーザー
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),  # DBパスワード
+        'HOST': os.getenv('DATABASE_HOST'),  # DBホスト
+        'PORT': os.getenv('DATABASE_PORT'),  # DBポート
     }
 }
 
 # パスワードバリデーション設定
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},  # ユーザー情報との類似性チェック
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},  # 最小長チェック
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},  # 一般的なパスワードチェック
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},  # 数字のみのパスワードチェック
 ]
 
 # 国際化設定
-LANGUAGE_CODE = 'ja'
-TIME_ZONE = 'Asia/Tokyo'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
+LANGUAGE_CODE = 'ja'  # 日本語
+TIME_ZONE = 'Asia/Tokyo'  # 東京タイムゾーン
+USE_I18N = True  # 国際化
+USE_L10N = True  # ローカライズ
+USE_TZ = True  # タイムゾーン対応
 
 # 静的ファイル設定
-STATIC_URL = 'static/'
+STATIC_URL = 'static/'  # 静的ファイルURL
 
-# デフォルトのプライマリキーフィールド
+# デフォルトプライマリキー設定
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # REST Framework設定
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT認証使用
     ),
 }
 
 # CORS設定
-# フロントエンド開発サーバーからのアクセスを許可
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000",  # フロントエンド開発サーバー
 ]
-
-# または、すべてのオリジンを許可する場合（開発環境のみ推奨）
-# CORS_ALLOW_ALL_ORIGINS = True
 
 # 許可するHTTPメソッド
 CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
+    "DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT",
 ]
 
 # 許可するHTTPヘッダー
 CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
+    "accept", "accept-encoding", "authorization", "content-type", 
+    "dnt", "origin", "user-agent", "x-csrftoken", "x-requested-with",
 ]
 
-# JWT認証の設定
+# JWT認証設定
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-    'SIGNING_KEY': SECRET_KEY,
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # アクセストークン有効期間
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # リフレッシュトークン有効期間
+    'ROTATE_REFRESH_TOKENS': True,  # トークンローテーション有効
+    'BLACKLIST_AFTER_ROTATION': True,  # ローテーション後の古いトークンを無効化
+    'AUTH_HEADER_TYPES': ('Bearer',),  # 認証ヘッダータイプ
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),  # トークンクラス
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',  # ユーザークラス
+    'SIGNING_KEY': SECRET_KEY,  # 署名キー
 }
 
 # ロギング設定
@@ -163,11 +145,11 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'class': 'logging.StreamHandler',
+            'class': 'logging.StreamHandler',  # コンソール出力ハンドラー
         },
     },
     'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
+        'handlers': ['console'],  # ルートロガーのハンドラー
+        'level': 'DEBUG',  # ログレベル
     },
 }
