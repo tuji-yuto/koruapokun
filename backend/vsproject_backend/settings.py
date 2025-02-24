@@ -117,7 +117,32 @@ REST_FRAMEWORK = {
 # フロントエンド開発サーバーからのアクセスを許可
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
+]
+
+# または、すべてのオリジンを許可する場合（開発環境のみ推奨）
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# 許可するHTTPメソッド
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+# 許可するHTTPヘッダー
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 ]
 
 # JWT認証の設定

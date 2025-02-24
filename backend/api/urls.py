@@ -1,7 +1,7 @@
 # APIエンドポイントのルーティング設定
 # 各機能へのURLパスとビューを紐付ける
 
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
