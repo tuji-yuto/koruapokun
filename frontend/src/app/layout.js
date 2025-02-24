@@ -1,10 +1,10 @@
 'use client';
 
 /**
- * アプリケーションのルートレイアウトコンポーネント
+ * アプリケーションのルートレイアウト
  * 
- * このファイルはアプリケーション全体の基本レイアウトを定義します。
- * テーマ設定、フォント読み込み、メタデータなどの共通要素を管理します。
+ * 全体の基本レイアウト定義
+ * テーマ設定、フォント読み込み、メタデータなどの共通要素管理
  */
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -15,8 +15,10 @@ import { useMediaQuery } from '@mui/material';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Geistフォントファミリーの設定
-// Tailwindで使用するためにCSS変数として定義
+/**
+ * Geistフォントファミリー設定
+ * Tailwindで使用するためのCSS変数定義
+ */
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,11 +29,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * ルートレイアウトコンポーネント
+ * アプリケーション全体の共通レイアウト構造提供
+ */
 export default function RootLayout({ children }) {
-  // システム設定に基づいてダークモード判定
+  // システム設定に基づくダークモード判定
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   
-  // ダークモード設定に応じたテーマを選択（再レンダリング最適化）
+  // ダークモード設定に応じたテーマ選択（メモ化による最適化）
   const theme = useMemo(
     () => prefersDarkMode ? darkTheme : lightTheme,
     [prefersDarkMode]
