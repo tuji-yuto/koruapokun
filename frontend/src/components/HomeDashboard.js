@@ -472,7 +472,7 @@ export default function HomeDashboard() {
   const [error, setError] = useState(null); // エラーメッセージを管理するための状態
   const theme = useTheme();
   const router = useRouter();
-
+  
   // ユーザー名状態の追加
   const [username, setUsername] = useState('');
   
@@ -482,7 +482,7 @@ export default function HomeDashboard() {
     message: '',
     severity: 'success'  // 'success' | 'error' | 'warning' | 'info'
   });
-  
+
   // Snackbar を閉じる関数
   const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
@@ -591,9 +591,9 @@ export default function HomeDashboard() {
         }
       });
       
-        if (res.ok) {
-          const data = await res.json();
-          setHomeData(data);
+      if (res.ok) {
+        const data = await res.json();
+        setHomeData(data);
       }
     } catch (error) {
       console.error('Data fetch error:', error);
