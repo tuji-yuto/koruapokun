@@ -1,7 +1,6 @@
 /**
  * Tailwind CSS設定ファイル
- * このファイルでプロジェクト全体のスタイリングの基本設定を管理します。
- * コンテンツのパス、テーマ拡張、プラグインなどを定義しています。
+ * プロジェクト全体のスタイリング基本設定を管理
  * 
  * @type {import('tailwindcss').Config}
  */
@@ -9,29 +8,30 @@ import typographyPlugin from '@tailwindcss/typography';
 import formsPlugin from '@tailwindcss/forms';
 
 export default {
-  // スタイルを適用するファイルパスを指定
+  // スタイル適用対象のファイルパスを指定
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",  // すべてのソースファイルを対象に
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",  // 全ソースファイルを対象
   ],
   theme: {
     extend: {
-      // カスタムカラーの定義
       colors: {
-        background: "var(--background)",  // 背景色のCSS変数
-        foreground: "var(--foreground)",  // 前景色のCSS変数
+        // グローバルカラー変数
+        background: "var(--background)",  // 背景色
+        foreground: "var(--foreground)",  // 前景色
+        // プライマリカラーとバリエーション
         primary: {
-          DEFAULT: '#1976d2',  // 基本のプライマリカラー
-          light: '#42a5f5',    // 明るいバリエーション
-          dark: '#1565c0'      // 暗いバリエーション
+          DEFAULT: '#1976d2',  // 基本色
+          light: '#42a5f5',    // 明色
+          dark: '#1565c0'      // 暗色
         }
       },
-      // カスタムフォントファミリーの設定
       fontFamily: {
-        sans: ['var(--font-geist-sans)'],  // サンセリフフォント
-        mono: ['var(--font-geist-mono)'],  // 等幅フォント
+        // カスタムフォント定義
+        sans: ['var(--font-geist-sans)'],  // サンセリフ
+        mono: ['var(--font-geist-mono)'],  // 等幅
       },
     },
   },
-  // 使用するTailwindプラグイン
+  // 拡張プラグイン
   plugins: [formsPlugin, typographyPlugin],
 };

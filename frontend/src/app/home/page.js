@@ -1,14 +1,24 @@
 "use client";
 
-import dynamic from 'next/dynamic'; // dynamic importを使用するためのインポート
+/**
+ * ホームページモジュール
+ * 
+ * このファイルはアプリケーションのホームページを定義します。
+ * ダッシュボード表示のためのメインエントリーポイントとして機能します。
+ */
 
-// dynamic importを利用してクライアントコンポーネントとしてHomeDashboardを読み込む
-const HomeDashboard = dynamic(() => import("../../components/HomeDashboard"), { ssr: false });
+import dynamic from 'next/dynamic';
+
+// クライアントサイドレンダリングのためにHomeDashboardをdynamicインポート
+const HomeDashboard = dynamic(
+  () => import("../../components/HomeDashboard"),
+  { ssr: false } // サーバーサイドレンダリングを無効化
+);
 
 export default function HomePage() {
   return (
     <main>
-      <HomeDashboard /> {/* HomeDashboardコンポーネントを表示 */}
+      <HomeDashboard />
     </main>
   );
 }

@@ -1,14 +1,24 @@
 "use client";
 
-import dynamic from 'next/dynamic'; // dynamic importを使用するためのインポート
+/**
+ * ログインページモジュール
+ * 
+ * このファイルはユーザー認証のためのログインページを定義します。
+ * クライアントサイドでのみ実行されるコンポーネントです。
+ */
 
-// dynamic importを利用してクライアントコンポーネントとしてLoginFormを読み込む
-const LoginForm = dynamic(() => import("../../components/LoginForm"), { ssr: false });
+import dynamic from 'next/dynamic';
+
+// SSRを無効化してLoginFormをクライアントサイドのみでレンダリング
+const LoginForm = dynamic(
+  () => import("../../components/LoginForm"),
+  { ssr: false }
+);
 
 export default function LoginPage() {
   return (
     <main>
-      <LoginForm /> {/* LoginFormコンポーネントを表示 */}
+      <LoginForm />
     </main>
   );
 }

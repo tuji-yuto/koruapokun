@@ -1,15 +1,15 @@
 /**
  * PostCSS設定ファイル
- * このファイルはCSSの変換処理を定義します。
- * TailwindCSSとAutoprefixerを使用して、モダンなCSSワークフローを実現します。
+ * CSSの変換処理を定義
+ * TailwindCSSとAutoprefixerを使用したモダンなCSSワークフロー実現
  * 
  * @type {import('postcss-load-config').Config}
  */
 export default {
   plugins: {
-    // TailwindCSSを適用してユーティリティクラスを生成
+    // TailwindCSSプラグイン - ユーティリティクラス生成
     tailwindcss: {},
-    // ベンダープレフィックスを自動追加してブラウザ互換性を向上
+    // Autoprefixerプラグイン - ベンダープレフィックス自動追加でブラウザ互換性向上
     autoprefixer: {},
   },
 };

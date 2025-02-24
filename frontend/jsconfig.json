@@ -1,11 +1,11 @@
 /**
  * フロントエンドのJavaScript設定ファイル
- * このファイルはエディタの補完機能やパス解決をサポートするための設定を定義します
+ * エディタの補完機能やパス解決をサポートするための設定を定義
  */
 {
   "compilerOptions": {
-    // @/を使ってsrcディレクトリへの相対パスを簡潔に記述できるようにする
-    // 例: import Component from '@/components/Component' （src/components/Componentを参照）
+    // @/を使ってsrcディレクトリへの相対パスを簡潔に記述
+    // 例: import Component from '@/components/Component' (src/components/Componentを参照)
     "paths": {
       "@/*": ["./src/*"]
     }

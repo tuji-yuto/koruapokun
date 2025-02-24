@@ -1,31 +1,43 @@
+/**
+ * グローバルCSSファイル
+ * アプリケーション全体に適用されるスタイルを定義します。
+ * Tailwind CSSの基本設定とカスタム変数を含みます。
+ */
+
+/* Tailwind CSSの基本スタイルを読み込み */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ライトモード（デフォルト）のカラー変数 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff;  /* 背景色：白 */
+  --foreground: #171717;  /* 文字色：濃いグレー */
 }
 
+/* ダークモード時のカラー変数（システム設定に基づく） */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0a;  /* 背景色：ほぼ黒 */
+    --foreground: #ededed;  /* 文字色：明るいグレー */
   }
 }
 
+/* 基本的なボディスタイル */
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* MUIコンポーネントのカスタマイズ */
 /* カレンダーポップアップの日本語フォント設定 */
 .MuiPickersCalendarHeader-label {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-/* 数値入力フィールドのスピンボタン非表示 */
+/* フォーム要素のカスタマイズ */
+/* 数値入力フィールドのスピンボタンを非表示にする */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
