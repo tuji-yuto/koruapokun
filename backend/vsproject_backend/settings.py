@@ -1,4 +1,4 @@
-# Djangoプロジェクトの設定ファイル
+# Djangoプロジェクト設定ファイル
 # 環境設定、アプリケーション登録、セキュリティ設定などを管理
 
 from pathlib import Path
@@ -116,12 +116,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # フロントエンド開発サーバー
 ]
 
-# 許可するHTTPメソッド
-CORS_ALLOW_METHODS = [
-    "DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT",
-]
-
-# 許可するHTTPヘッダー
+# 許可するHTTPメソッドとヘッダー
+CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
 CORS_ALLOW_HEADERS = [
     "accept", "accept-encoding", "authorization", "content-type", 
     "dnt", "origin", "user-agent", "x-csrftoken", "x-requested-with",
