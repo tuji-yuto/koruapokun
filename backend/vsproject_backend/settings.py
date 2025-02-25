@@ -5,6 +5,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+import dj_database_url
 
 # プロジェクトのベースディレクトリを設定
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,8 +15,8 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # セキュリティ関連の設定
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')  
-DEBUG = True  # デバッグモード有効化
-ALLOWED_HOSTS = []  # アクセスを許可するホスト
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # 本番環境ではFalse
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']  # Renderのドメインを追加
 
 # インストール済みアプリケーション
 INSTALLED_APPS = [
@@ -72,16 +73,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'vsproject_backend.wsgi.application'
 
 # データベース設定
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL使用
-        'NAME': os.getenv('DATABASE_NAME'),  # DB名
-        'USER': os.getenv('DATABASE_USER'),  # DBユーザー
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),  # DBパスワード
-        'HOST': os.getenv('DATABASE_HOST'),  # DBホスト
-        'PORT': os.getenv('DATABASE_PORT'),  # DBポート
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
-}
+else:
+    # ローカル開発用の設定
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL使用
+            'NAME': os.getenv('DATABASE_NAME'),  # DB名
+            'USER': os.getenv('DATABASE_USER'),  # DBユーザー
+            'PASSWORD': os.getenv('DATABASE_PASSWORD'),  # DBパスワード
+            'HOST': os.getenv('DATABASE_HOST'),  # DBホスト
+            'PORT': os.getenv('DATABASE_PORT'),  # DBポート
+        }
+    }
 
 # パスワードバリデーション設定
 AUTH_PASSWORD_VALIDATORS = [
@@ -100,6 +108,7 @@ USE_TZ = True  # タイムゾーン対応
 
 # 静的ファイル設定
 STATIC_URL = 'static/'  # 静的ファイルURL
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # 静的ファイル収集先ディレクトリ
 
 # デフォルトプライマリキー設定
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -114,6 +123,8 @@ REST_FRAMEWORK = {
 # CORS設定
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # フロントエンド開発サーバー
+    "https://localhost:3000",
+    "https://*.onrender.com",  # Renderのドメイン
 ]
 
 # 許可するHTTPメソッドとヘッダー
