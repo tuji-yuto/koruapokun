@@ -124,8 +124,12 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # フロントエンド開発サーバー
     "https://localhost:3000",
-    "https://*.onrender.com",  # Renderのドメイン
+    "https://koruapokun-4.onrender.com",  # Renderのドメイン
+    "https://koruapokun100.vercel.app",  # Vercelにデプロイされたフロントエンド
 ]
+
+# すべてのオリジンを許可する場合は以下を使用
+CORS_ALLOW_ALL_ORIGINS = True
 
 # 許可するHTTPメソッドとヘッダー
 CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -133,6 +137,9 @@ CORS_ALLOW_HEADERS = [
     "accept", "accept-encoding", "authorization", "content-type", 
     "dnt", "origin", "user-agent", "x-csrftoken", "x-requested-with",
 ]
+
+# クレデンシャル（Cookie、認証ヘッダーなど）を含むリクエストを許可
+CORS_ALLOW_CREDENTIALS = True
 
 # JWT認証設定
 SIMPLE_JWT = {
