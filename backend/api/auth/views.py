@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 @api_view(['POST'])
 def register(request):
@@ -28,11 +30,20 @@ def register(request):
         )
     
     try:
+        # パスワードの検証
+        validate_password(password)
+        
         # ユーザー作成
         User.objects.create_user(username=username, password=password)
         return Response(
             {'message': '登録が完了しました'}, 
             status=status.HTTP_201_CREATED
+        )
+    except ValidationError as e:
+        # パスワード検証エラー
+        return Response(
+            {'message': f'パスワードが要件を満たしていません: {", ".join(e.messages)}'}, 
+            status=status.HTTP_400_BAD_REQUEST
         )
     except IntegrityError:
         # ユーザー名重複エラー

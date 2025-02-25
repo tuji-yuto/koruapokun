@@ -1,6 +1,6 @@
 // src/components/RegistrationForm.js
 "use client"; // クライアントサイドでのみ実行されるコンポーネントであることを示す
-import { useState } from "react"; // 状態管理のためのuseStateフック
+import { useState, useEffect } from "react"; // 状態管理のためのuseStateフック
 import { useRouter } from "next/navigation"; // ページ遷移のためのuseRouterフック
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -16,14 +16,17 @@ import {
   Alert,
   Grid,
   IconButton,
-  CircularProgress
+  CircularProgress,
+  LinearProgress,
+  Tooltip
 } from '@mui/material';
 import { 
   Person as PersonIcon, 
   Lock as LockIcon,
   CheckCircleOutline as CheckIcon,
   Visibility,
-  VisibilityOff
+  VisibilityOff,
+  Info as InfoIcon
 } from '@mui/icons-material';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -35,6 +38,19 @@ const formVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
+
+// 一般的なパスワードパターンのチェック
+const commonPasswordPatterns = [
+  /^password\d*$/i,
+  /^12345\d*$/,
+  /^qwerty\d*$/i,
+  /^admin\d*$/i,
+  /^welcome\d*$/i,
+  /^letmein\d*$/i,
+  /^abc123\d*$/,
+  /^monkey\d*$/i,
+  /^1234\d*$/
+];
 
 // バリデーションスキーマ
 const schema = z.object({
@@ -52,13 +68,90 @@ const schema = z.object({
       /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+$/,
       "使用可能な文字：アルファベット（大文字/小文字）、数字、特殊文字"
     )
+    .refine(
+      (password) => {
+        // 一般的なパスワードパターンに一致しないことを確認
+        return !commonPasswordPatterns.some(pattern => pattern.test(password));
+      },
+      {
+        message: "このパスワードは一般的すぎるため、安全ではありません"
+      }
+    )
+    .refine(
+      (password) => {
+        // 少なくとも1つの数字を含む
+        return /\d/.test(password);
+      },
+      {
+        message: "パスワードには少なくとも1つの数字を含める必要があります"
+      }
+    )
+    .refine(
+      (password) => {
+        // 少なくとも1つの特殊文字を含む
+        return /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+      },
+      {
+        message: "パスワードには少なくとも1つの特殊文字を含める必要があります"
+      }
+    )
+    .refine(
+      (password) => {
+        // 少なくとも1つの大文字を含む
+        return /[A-Z]/.test(password);
+      },
+      {
+        message: "パスワードには少なくとも1つの大文字を含める必要があります"
+      }
+    )
 });
 
 // APIのベースURL
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://koruapokun-4.onrender.com';
 
+// パスワード強度を計算する関数
+const calculatePasswordStrength = (password) => {
+  if (!password) return 0;
+  
+  let strength = 0;
+  
+  // 長さによるスコア
+  if (password.length >= 8) strength += 20;
+  if (password.length >= 12) strength += 10;
+  
+  // 文字種によるスコア
+  if (/[A-Z]/.test(password)) strength += 15; // 大文字
+  if (/[a-z]/.test(password)) strength += 15; // 小文字
+  if (/\d/.test(password)) strength += 15; // 数字
+  if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) strength += 15; // 特殊文字
+  
+  // 一般的なパターンのチェック
+  if (commonPasswordPatterns.some(pattern => pattern.test(password))) {
+    strength -= 30;
+  }
+  
+  // 最大100%、最小0%に制限
+  return Math.max(0, Math.min(100, strength));
+};
+
+// 強度に応じた色を返す関数
+const getStrengthColor = (strength) => {
+  if (strength < 30) return '#f44336'; // 弱い: 赤
+  if (strength < 60) return '#ff9800'; // 中程度: オレンジ
+  if (strength < 80) return '#ffeb3b'; // 良い: 黄色
+  return '#4caf50'; // 強い: 緑
+};
+
+// 強度に応じたテキストを返す関数
+const getStrengthText = (strength) => {
+  if (strength < 30) return '弱い';
+  if (strength < 60) return '中程度';
+  if (strength < 80) return '良い';
+  return '強い';
+};
+
 export default function RegistrationForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
     resolver: zodResolver(schema)
   });
   const [success, setSuccess] = useState(false);
@@ -67,6 +160,15 @@ export default function RegistrationForm() {
   const theme = useTheme(); // 現在のテーマを取得
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  // パスワードの値を監視
+  const password = watch('password', '');
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  
+  // パスワードが変更されたときに強度を計算
+  useEffect(() => {
+    setPasswordStrength(calculatePasswordStrength(password));
+  }, [password]);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -244,6 +346,81 @@ export default function RegistrationForm() {
                       )
                     }}
                   />
+                  
+                  {/* パスワード強度インジケーター */}
+                  {password && (
+                    <Box sx={{ mt: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                        <Typography variant="body2" sx={{ color: getStrengthColor(passwordStrength) }}>
+                          パスワード強度: {getStrengthText(passwordStrength)}
+                        </Typography>
+                        <Tooltip title="安全なパスワードは、大文字・小文字・数字・特殊文字を含み、一般的なパターンを避けたものです。また、他のサイトで使用したことのないパスワードを使用することをお勧めします。" arrow>
+                          <IconButton size="small">
+                            <InfoIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                      <LinearProgress 
+                        variant="determinate" 
+                        value={passwordStrength} 
+                        sx={{ 
+                          height: 8, 
+                          borderRadius: 4,
+                          backgroundColor: alpha(getStrengthColor(passwordStrength), 0.2),
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: getStrengthColor(passwordStrength)
+                          }
+                        }} 
+                      />
+                    </Box>
+                  )}
+                  
+                  {/* パスワード要件ガイド */}
+                  <Box sx={{ mt: 1, p: 1.5, border: '1px solid #e0e0e0', borderRadius: '8px', bgcolor: '#f5f5f5' }}>
+                    <Typography variant="body2" sx={{ fontWeight: 500, mb: 1 }}>
+                      安全なパスワードの条件:
+                    </Typography>
+                    <Typography variant="body2" sx={{ 
+                      color: /[A-Z]/.test(password) ? 'green' : 'text.secondary',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5
+                    }}>
+                      {/[A-Z]/.test(password) ? '✓' : '○'} 大文字を含む
+                    </Typography>
+                    <Typography variant="body2" sx={{ 
+                      color: /\d/.test(password) ? 'green' : 'text.secondary',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5
+                    }}>
+                      {/\d/.test(password) ? '✓' : '○'} 数字を含む
+                    </Typography>
+                    <Typography variant="body2" sx={{ 
+                      color: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password) ? 'green' : 'text.secondary',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5
+                    }}>
+                      {/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password) ? '✓' : '○'} 特殊文字を含む
+                    </Typography>
+                    <Typography variant="body2" sx={{ 
+                      color: password.length >= 8 ? 'green' : 'text.secondary',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5
+                    }}>
+                      {password.length >= 8 ? '✓' : '○'} 8文字以上
+                    </Typography>
+                    <Typography variant="body2" sx={{ 
+                      color: !commonPasswordPatterns.some(pattern => pattern.test(password)) ? 'green' : 'text.secondary',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5
+                    }}>
+                      {!commonPasswordPatterns.some(pattern => pattern.test(password)) ? '✓' : '○'} 一般的なパターンを避ける
+                    </Typography>
+                  </Box>
                 </Grid>
 
                 <Grid item xs={12}>

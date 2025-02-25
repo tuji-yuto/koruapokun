@@ -93,8 +93,18 @@ else:
 
 # パスワードバリデーション設定
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},  # ユーザー情報との類似性チェック
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},  # 最小長チェック
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {
+            'max_similarity': 0.5,  # 類似度閾値を0.7から0.5に下げて厳しくする
+        }
+    },  # ユーザー情報との類似性チェック
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 10,  # 最小長を8から10に変更
+        }
+    },  # 最小長チェック
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},  # 一般的なパスワードチェック
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},  # 数字のみのパスワードチェック
 ]
