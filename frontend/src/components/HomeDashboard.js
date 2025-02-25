@@ -284,23 +284,24 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
       <form onSubmit={handleSubmit}>
         <Box sx={{
           display: 'flex',
-          gap: 1.5,  // gap を2から1.5に縮小
-          flexWrap: 'nowrap',
+          gap: { xs: 1, sm: 1.5 },  // モバイルではギャップを小さく
+          flexWrap: { xs: 'wrap', md: 'nowrap' },  // モバイルでは折り返し
           alignItems: 'flex-start',
           width: '100%',
         }}>
           {inputFields.map((field) => (
             <Box key={field.name} sx={{
-              flex: 1,
-              minWidth: field.type === 'date' ? '170px' : 0,
+              flex: { xs: '0 0 calc(50% - 8px)', sm: '0 0 calc(33.333% - 8px)', md: 1 },  // モバイルでは2列、タブレットでは3列
+              minWidth: field.type === 'date' ? { xs: '100%', sm: '170px' } : 0,  // 日付フィールドはモバイルでは全幅
+              mb: { xs: 1, md: 0 },  // モバイルでは下マージンを追加
             }}>
               <Typography variant="caption" sx={{
                 fontWeight: 600,
                 color: '#333',
                 mb: 0.5,
                 display: 'block',
-                fontSize: '0.9rem',
-                textAlign: 'right'  // 右揃えに変更
+                fontSize: { xs: '0.8rem', sm: '0.9rem' },  // モバイルではフォントサイズを小さく
+                textAlign: { xs: 'left', md: 'right' }  // モバイルでは左揃え
               }}>
                 {field.label}
               </Typography>
@@ -329,7 +330,7 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
                 },
                 '& .MuiInputBase-root': {
                   width: '100%',
-                  height: '36px',
+                  height: { xs: '40px', md: '36px' },  // モバイルでは高さを調整
                   '&:focus, &:focus-within': {
                     outline: 'none',
                     boxShadow: 'none'
@@ -363,8 +364,8 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
                           '& .MuiOutlinedInput-root': {
                             border: 'none',
                             backgroundColor: 'transparent',
-                            height: '36px',
-                            fontSize: '1rem',
+                            height: { xs: '40px', md: '36px' },  // モバイルでは高さを調整
+                            fontSize: { xs: '0.9rem', md: '1rem' },  // モバイルではフォントサイズを小さく
                             '& .MuiOutlinedInput-notchedOutline': {
                               border: 'none'
                             },
@@ -386,9 +387,9 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
                     InputProps={{
                       disableUnderline: true,
                       sx: { 
-                        fontSize: '1rem',
+                        fontSize: { xs: '0.9rem', md: '1rem' },  // モバイルではフォントサイズを小さく
                         fontWeight: 500,
-                        height: '36px',
+                        height: { xs: '40px', md: '36px' },  // モバイルでは高さを調整
                         px: 1,
                         '&:focus, &:focus-within': {
                           outline: 'none',
@@ -419,22 +420,24 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
 
           {/* 送信ボタン */}
           <Box sx={{
-            flex: '0 0 auto',
-            alignSelf: 'flex-end',
-            mb: '1px'
+            flex: { xs: '0 0 100%', md: '0 0 auto' },  // モバイルでは全幅
+            alignSelf: { xs: 'center', md: 'flex-end' },  // モバイルでは中央揃え
+            mt: { xs: 2, md: 0 },  // モバイルでは上マージンを追加
+            mb: { xs: 0, md: '1px' }
           }}>
             <Button
               variant="contained"
               type="submit"
               disabled={!validateForm() || loading}
               sx={{
-                height: '36px',
+                height: { xs: '44px', md: '36px' },  // モバイルでは高さを大きく
+                width: { xs: '100%', md: 'auto' },  // モバイルでは全幅
                 backgroundColor: '#3B82F6',
                 borderRadius: '8px',
                 fontWeight: 600,
                 whiteSpace: 'nowrap',
                 px: 3,
-                fontSize: '0.95rem',
+                fontSize: { xs: '1rem', md: '0.95rem' },  // モバイルではフォントサイズを大きく
                 '&:hover': {
                   backgroundColor: alpha('#3B82F6', 0.8)
                 },
@@ -930,8 +933,8 @@ export default function HomeDashboard() {
     return (
       <Box sx={{ 
         mb: 4,
-        p: 4,
-        borderRadius: '20px',
+        p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+        borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
         background: '#fbf8f4',
         backdropFilter: 'blur(10px)',
         border: `1px solid ${alpha('#3B82F6', 0.2)}`,
@@ -941,26 +944,32 @@ export default function HomeDashboard() {
           variant="h5" 
           gutterBottom 
           sx={{ 
-            mb: 3,
+            mb: { xs: 2, md: 3 },  // モバイルでは下マージンを小さく
             fontWeight: 600,
             letterSpacing: '0.5px',
             color: '#262724',
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
-            pb: 2
+            pb: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+            fontSize: { xs: '1.2rem', md: '1.5rem' }  // モバイルではフォントサイズを小さく
           }}
         >
           {new Date().getMonth() + 1}月の目標
         </Typography>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs>
+        <Grid container spacing={{ xs: 2, md: 3 }} alignItems="center">
+          <Grid item xs={12} sm={6} md={3}>
             <Box sx={{
               ...innerBoxStyle,
+              p: { xs: 2, md: 3 },  // モバイルではパディングを小さく
               display: 'flex',
               alignItems: 'center',
               gap: 1
             }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, color: '#262724' }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+              }}>
                 目標獲得数: {target}件
               </Typography>
               <IconButton 
@@ -977,29 +986,44 @@ export default function HomeDashboard() {
               </IconButton>
             </Box>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} sm={6} md={3}>
             <Box sx={{
-              ...innerBoxStyle
+              ...innerBoxStyle,
+              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
             }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, color: '#262724' }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+              }}>
                 今月の獲得数: {actual}件
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} sm={6} md={3}>
             <Box sx={{
-              ...innerBoxStyle
+              ...innerBoxStyle,
+              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
             }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, color: '#262724' }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+              }}>
                 進捗率: {progressRate.toFixed(1)}%
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} sm={6} md={3}>
             <Box sx={{
-              ...innerBoxStyle
+              ...innerBoxStyle,
+              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
             }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, color: '#262724' }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+              }}>
                 達成率: {achievementRate}%
               </Typography>
               <Box sx={{ mt: 1 }}>
@@ -1042,9 +1066,9 @@ export default function HomeDashboard() {
 
   // 共通のボックススタイル
   const commonBoxStyle = {
-    p: 4,
-    borderRadius: '20px',
-    background: '#fbf8f4',  // 薄いベージュ系に変更
+    p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+    borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
+    background: '#fbf8f4',
     backdropFilter: 'blur(10px)',
     border: `1px solid ${alpha('#3B82F6', 0.2)}`,
     boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
@@ -1052,9 +1076,9 @@ export default function HomeDashboard() {
 
   // 内部のカードスタイル
   const innerBoxStyle = {
-    p: 3,
-    borderRadius: '15px',
-    background: '#fbf8f4',  // 薄いベージュ系に変更
+    p: { xs: 2, md: 3 },  // モバイルではパディングを小さく
+    borderRadius: { xs: '10px', md: '15px' },  // モバイルでは角丸を小さく
+    background: '#fbf8f4',
     border: `1px solid ${alpha('#3B82F6', 0.15)}`,
   };
 
@@ -1095,13 +1119,13 @@ export default function HomeDashboard() {
           }}
         >
           <Toolbar sx={{ 
-            minHeight: '64px !important',
+            minHeight: { xs: '56px !important', md: '64px !important' },  // モバイルでは高さを小さく
             justifyContent: 'space-between',
-            px: { xs: 2, md: 4 },
+            px: { xs: 1, sm: 2, md: 4 },  // モバイルでは左右パディングを小さく
             background: 'transparent'  // ツールバー背景も透明に
           }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <img src="/images/tori.png" alt="Icon" style={{ width: '60px', height: '60px', borderRadius: '50%' }} />
+              <img src="/images/tori.png" alt="Icon" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
               <Typography 
                 variant="h5" 
                 component="div" 
@@ -1109,37 +1133,61 @@ export default function HomeDashboard() {
                   fontFamily: 'Noto Sans JP, sans-serif',
                   fontWeight: 700,
                   color: '#262724',
-                  fontSize: '1.3rem'
+                  fontSize: { xs: '1rem', sm: '1.2rem', md: '1.3rem' },  // モバイルではフォントサイズを小さく
+                  display: { xs: 'none', sm: 'block' }  // モバイルでは非表示
                 }}
               >
                 コール管理システム こるあぽくん
+              </Typography>
+              <Typography 
+                variant="h5" 
+                component="div" 
+                sx={{ 
+                  fontFamily: 'Noto Sans JP, sans-serif',
+                  fontWeight: 700,
+                  color: '#262724',
+                  fontSize: '1rem',
+                  display: { xs: 'block', sm: 'none' }  // モバイルのみ表示
+                }}
+              >
+                こるあぽくん
               </Typography>
             </Box>
             
             <Box sx={{ 
               display: 'flex', 
               alignItems: 'center', 
-              gap: 2
+              gap: { xs: 1, md: 2 }  // モバイルではギャップを小さく
             }}>
               <Box sx={{ 
                 display: 'flex', 
                 alignItems: 'center',
                 gap: 1,
-                px: 2,
+                px: { xs: 1, md: 2 },  // モバイルではパディングを小さく
                 py: 1,
                 borderRadius: '8px',
                 background: alpha('#FFFFFF', 0.2),
                 backdropFilter: 'blur(5px)'
               }}>
                 <Person sx={{ 
-                  fontSize: '1.4rem', 
+                  fontSize: { xs: '1.2rem', md: '1.4rem' },  // モバイルではアイコンを小さく
                   color: '#262724'
                 }}/>
                 <Typography sx={{ 
                   fontWeight: 500,
-                  color: '#262724'
+                  color: '#262724',
+                  fontSize: { xs: '0.8rem', md: '1rem' },  // モバイルではフォントサイズを小さく
+                  display: { xs: 'none', sm: 'block' }  // モバイルでは非表示
                 }}>
                   {username} さん
+                </Typography>
+                <Typography sx={{ 
+                  fontWeight: 500,
+                  color: '#262724',
+                  fontSize: '0.8rem',
+                  display: { xs: 'block', sm: 'none' }  // モバイルのみ表示
+                }}>
+                  {username}
                 </Typography>
               </Box>
               
@@ -1148,12 +1196,13 @@ export default function HomeDashboard() {
                 color="inherit"
                 sx={{ 
                   borderRadius: '8px',
-                  px: 2,
+                  px: { xs: 1, md: 2 },  // モバイルではパディングを小さく
                   py: 0.5,
                   textTransform: 'none',
                   borderColor: alpha('#FFFFFF', 0.3),
                   color: '#262724',
                   background: alpha('#FFFFFF', 0.1),
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
                   '&:hover': {
                     borderColor: '#FFFFFF',
                     backgroundColor: alpha('#FFFFFF', 0.2)
@@ -1173,9 +1222,9 @@ export default function HomeDashboard() {
           exit={{ opacity: 0 }}
         >
           <Container maxWidth="lg" sx={{ 
-            px: { xs: 1, md: 2 },  // 左右の余白を狭く設定（xs: 8px, md: 16px）
+            px: { xs: 1, sm: 1, md: 2 },  // 左右の余白を狭く設定（xs: 8px, md: 16px）
             '& .MuiPaper-root': {
-              borderRadius: '20px',
+              borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
@@ -1189,8 +1238,8 @@ export default function HomeDashboard() {
           }}>
             <Box sx={{ 
               mb: 4,
-              p: 4,
-              borderRadius: '20px',
+              p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+              borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
               backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
@@ -1200,13 +1249,14 @@ export default function HomeDashboard() {
                 variant="h5" 
                 gutterBottom 
                 sx={{ 
-                  mb: 3,
+                  mb: { xs: 2, md: 3 },  // モバイルでは下マージンを小さく
                   fontWeight: 600,
                   letterSpacing: '0.5px',
                   color: '#262724',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
                   borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
-                  pb: 2
+                  pb: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                  fontSize: { xs: '1.2rem', md: '1.5rem' }  // モバイルではフォントサイズを小さく
                 }}
               >
                 日次データ入力
@@ -1223,8 +1273,8 @@ export default function HomeDashboard() {
             {/* 当日データの表示 */}
             <Box sx={{ 
               mt: 4,
-              p: 4,
-              borderRadius: '20px',
+              p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+              borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
               backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
@@ -1234,18 +1284,19 @@ export default function HomeDashboard() {
                 variant="h5" 
                 gutterBottom 
                 sx={{ 
-                  mb: 3,
+                  mb: { xs: 2, md: 3 },  // モバイルでは下マージンを小さく
                   fontWeight: 600,
                   letterSpacing: '0.5px',
                   color: '#262724',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
                   borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
-                  pb: 2
+                  pb: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                  fontSize: { xs: '1.2rem', md: '1.5rem' }  // モバイルではフォントサイズを小さく
                 }}
               >
                 当日データ
               </Typography>
-              <Grid container spacing={3}>
+              <Grid container spacing={{ xs: 2, md: 3 }}>  {/* モバイルではグリッド間隔を小さく */}
                 {/* テーブル部分 (左半分) */}
                 <Grid item xs={12} md={6}>
                   <TableContainer component={Paper} sx={{
@@ -1253,17 +1304,21 @@ export default function HomeDashboard() {
                     '& .MuiTableCell-head': {
                       fontWeight: 600,
                       backgroundColor: alpha('#3B82F6', 0.1),
-                      borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`
+                      borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
+                      fontSize: { xs: '0.8rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
+                      padding: { xs: '8px 6px', md: '16px' }  // モバイルではパディングを小さく
                     },
                     '& .MuiTableCell-body': {
-                      py: 2,
+                      py: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                      px: { xs: '6px', md: '16px' },  // モバイルではパディングを小さく
+                      fontSize: { xs: '0.8rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
                       borderBottom: `1px solid ${alpha('#3B82F6', 0.3)}`
                     },
                     '& .MuiTableRow-root:hover': {
                       backgroundColor: alpha('#3B82F6', 0.05)
                     }
                   }}>
-                    <Table>
+                    <Table size={{'xs': 'small', 'md': 'medium'}}>  {/* モバイルではテーブルサイズを小さく */}
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>項目</TableCell>
@@ -1314,57 +1369,64 @@ export default function HomeDashboard() {
                     ...innerBoxStyle,
                     background: '#fbf8f4',  // 明示的に指定
                     height: '100%',
+                    p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                   }}>
-                    <Typography variant="subtitle1" align="center" gutterBottom>
+                    <Typography variant="subtitle1" align="center" gutterBottom sx={{
+                      fontSize: { xs: '0.9rem', md: '1rem' }  // モバイルではフォントサイズを小さく
+                    }}>
                       当日パフォーマンス比率
                     </Typography>
-                    <PieChart width={500} height={300}>
-                      <Pie
-                        data={[
-                          { name: '再コール率', value: dailyPerformance.re_call_rate || 0 },
-                          { name: '見込率', value: dailyPerformance.prospective_rate || 0 },
-                          { name: 'アプローチNG率', value: dailyPerformance.approach_ng_rate || 0 },
-                          { name: '商品説明NG率', value: dailyPerformance.product_ng_rate || 0 },
-                          { name: '獲得率', value: dailyPerformance.acquisition_rate || 0 },
-                        ]}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={5}
-                        dataKey="value"
-                      >
-                        {[
-                          '再コール率',
-                          '見込率',
-                          'アプローチNG率',
-                          '商品説明NG率',
-                          '獲得率',
-                        ].map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip 
-                        formatter={(value) => `${value.toFixed(1)}%`}
-                        contentStyle={{
-                          background: '#fbf8f4',
-                          border: `1px solid ${alpha('#3B82F6', 0.1)}`,
-                          borderRadius: theme.shape.borderRadius,
-                          color: '#262724',
-                        }}
-                      />
-                      <Legend 
-                        wrapperStyle={{ paddingTop: 20 }}
-                        formatter={(value) => (
-                          <span style={{ 
+                    <ResponsiveContainer width="100%" height={300}>  {/* ResponsiveContainerを使用 */}
+                      <PieChart>
+                        <Pie
+                          data={[
+                            { name: '再コール率', value: dailyPerformance.re_call_rate || 0 },
+                            { name: '見込率', value: dailyPerformance.prospective_rate || 0 },
+                            { name: 'アプローチNG率', value: dailyPerformance.approach_ng_rate || 0 },
+                            { name: '商品説明NG率', value: dailyPerformance.product_ng_rate || 0 },
+                            { name: '獲得率', value: dailyPerformance.acquisition_rate || 0 },
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {[
+                            '再コール率',
+                            '見込率',
+                            'アプローチNG率',
+                            '商品説明NG率',
+                            '獲得率',
+                          ].map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          formatter={(value) => `${value.toFixed(1)}%`}
+                          contentStyle={{
+                            background: '#fbf8f4',
+                            border: `1px solid ${alpha('#3B82F6', 0.1)}`,
+                            borderRadius: theme.shape.borderRadius,
                             color: '#262724',
-                            fontWeight: 500
-                          }}>
-                            {value}
-                          </span>
-                        )}
-                      />
-                    </PieChart>
+                            fontSize: { xs: '0.8rem', md: '0.875rem' }  // モバイルではフォントサイズを小さく
+                          }}
+                        />
+                        <Legend 
+                          wrapperStyle={{ paddingTop: 20 }}
+                          formatter={(value) => (
+                            <span style={{ 
+                              color: '#262724',
+                              fontWeight: 500,
+                              fontSize: window.innerWidth < 600 ? '0.7rem' : '0.8rem'  // モバイルではフォントサイズを小さく
+                            }}>
+                              {value}
+                            </span>
+                          )}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
                   </Paper>
                 </Grid>
               </Grid>
@@ -1373,8 +1435,8 @@ export default function HomeDashboard() {
             {/* 月間累計データの表示 */}
             <Box sx={{ 
               mt: 4,
-              p: 4,
-              borderRadius: '20px',
+              p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+              borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
               backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
@@ -1384,18 +1446,19 @@ export default function HomeDashboard() {
                 variant="h5" 
                 gutterBottom 
                 sx={{ 
-                  mb: 3,
+                  mb: { xs: 2, md: 3 },  // モバイルでは下マージンを小さく
                   fontWeight: 600,
                   letterSpacing: '0.5px',
                   color: '#262724',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
                   borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
-                  pb: 2
+                  pb: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                  fontSize: { xs: '1.2rem', md: '1.5rem' }  // モバイルではフォントサイズを小さく
                 }}
               >
                 月間累計データ
               </Typography>
-              <Grid container spacing={3}>
+              <Grid container spacing={{ xs: 2, md: 3 }}>  {/* モバイルではグリッド間隔を小さく */}
                 {/* テーブル部分 (左半分) */}
                 <Grid item xs={12} md={6}>
                   <TableContainer component={Paper} sx={{
@@ -1403,17 +1466,21 @@ export default function HomeDashboard() {
                     '& .MuiTableCell-head': {
                       fontWeight: 600,
                       backgroundColor: alpha('#3B82F6', 0.1),
-                      borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`
+                      borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
+                      fontSize: { xs: '0.8rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
+                      padding: { xs: '8px 6px', md: '16px' }  // モバイルではパディングを小さく
                     },
                     '& .MuiTableCell-body': {
-                      py: 2,
+                      py: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                      px: { xs: '6px', md: '16px' },  // モバイルではパディングを小さく
+                      fontSize: { xs: '0.8rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
                       borderBottom: `1px solid ${alpha('#3B82F6', 0.3)}`
                     },
                     '& .MuiTableRow-root:hover': {
                       backgroundColor: alpha('#3B82F6', 0.05)
                     }
                   }}>
-                    <Table>
+                    <Table size={{'xs': 'small', 'md': 'medium'}}>  {/* モバイルではテーブルサイズを小さく */}
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>項目</TableCell>
@@ -1460,63 +1527,69 @@ export default function HomeDashboard() {
                     ...innerBoxStyle,
                     background: '#fbf8f4',  // 明示的に指定
                     height: '100%',
+                    p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                   }}>
                     <Typography variant="subtitle1" align="center" gutterBottom sx={{
                       fontWeight: 600,
                       color: '#262724',
-                      mb: 2
+                      mb: 2,
+                      fontSize: { xs: '0.9rem', md: '1rem' }  // モバイルではフォントサイズを小さく
                     }}>
                       月間パフォーマンス比率
                     </Typography>
-                    <PieChart width={500} height={300}>
-                      <Pie
-                        data={[
-                          { name: '再コール率', value: monthlyPerformance.re_call_rate || 0 },
-                          { name: '見込率', value: monthlyPerformance.prospective_rate || 0 },
-                          { name: 'アプローチNG率', value: monthlyPerformance.approach_ng_rate || 0 },
-                          { name: '商品説明NG率', value: monthlyPerformance.product_ng_rate || 0 },
-                          { name: '獲得率', value: monthlyPerformance.acquisition_rate || 0 },
-                        ]}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={5}
-                        dataKey="value"
-                      >
-                        {[
-                          '再コール率',
-                          '見込率',
-                          'アプローチNG率',
-                          '商品説明NG率',
-                          '獲得率',
-                        ].map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip 
-                        formatter={(value) => `${value.toFixed(1)}%`}
-                        contentStyle={{
-                          background: '#fbf8f4',
-                          border: `1px solid ${alpha('#3B82F6', 0.1)}`,
-                          borderRadius: theme.shape.borderRadius,
-                          color: '#262724',
-                        }}
-                      />
-                      <Legend 
-                        wrapperStyle={{ 
-                          paddingTop: 20,
-                        }}
-                        formatter={(value) => (
-                          <span style={{ 
+                    <ResponsiveContainer width="100%" height={300}>  {/* ResponsiveContainerを使用 */}
+                      <PieChart>
+                        <Pie
+                          data={[
+                            { name: '再コール率', value: monthlyPerformance.re_call_rate || 0 },
+                            { name: '見込率', value: monthlyPerformance.prospective_rate || 0 },
+                            { name: 'アプローチNG率', value: monthlyPerformance.approach_ng_rate || 0 },
+                            { name: '商品説明NG率', value: monthlyPerformance.product_ng_rate || 0 },
+                            { name: '獲得率', value: monthlyPerformance.acquisition_rate || 0 },
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {[
+                            '再コール率',
+                            '見込率',
+                            'アプローチNG率',
+                            '商品説明NG率',
+                            '獲得率',
+                          ].map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          formatter={(value) => `${value.toFixed(1)}%`}
+                          contentStyle={{
+                            background: '#fbf8f4',
+                            border: `1px solid ${alpha('#3B82F6', 0.1)}`,
+                            borderRadius: theme.shape.borderRadius,
                             color: '#262724',
-                            fontWeight: 500
-                          }}>
-                            {value}
-                          </span>
-                        )}
-                      />
-                    </PieChart>
+                            fontSize: { xs: '0.8rem', md: '0.875rem' }  // モバイルではフォントサイズを小さく
+                          }}
+                        />
+                        <Legend 
+                          wrapperStyle={{ 
+                            paddingTop: 20,
+                          }}
+                          formatter={(value) => (
+                            <span style={{ 
+                              color: '#262724',
+                              fontWeight: 500,
+                              fontSize: window.innerWidth < 600 ? '0.7rem' : '0.8rem'  // モバイルではフォントサイズを小さく
+                            }}>
+                              {value}
+                            </span>
+                          )}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
                   </Paper>
                 </Grid>
               </Grid>
@@ -1525,8 +1598,8 @@ export default function HomeDashboard() {
             {/* 月間グラフ */}
             <Box sx={{ 
               mt: 4,
-              p: 4,
-              borderRadius: '20px',
+              p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
+              borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
               backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
@@ -1536,27 +1609,28 @@ export default function HomeDashboard() {
                 variant="h5" 
                 gutterBottom 
                 sx={{ 
-                  mb: 3,
+                  mb: { xs: 2, md: 3 },  // モバイルでは下マージンを小さく
                   fontWeight: 600,
                   letterSpacing: '0.5px',
                   color: '#262724',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
                   borderBottom: `1px solid ${alpha('#3B82F6', 0.15)}`,
-                  pb: 2
+                  pb: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+                  fontSize: { xs: '1.2rem', md: '1.5rem' }  // モバイルではフォントサイズを小さく
                 }}
               >
                 月間グラフ
               </Typography>
               <Paper sx={{ 
-                p: 3,
+                p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                 width: '100%',
-                height: 500,
+                height: { xs: 400, md: 500 },  // モバイルでは高さを小さく
                 background: '#fbf8f4',  // 明示的に指定
               }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                     data={processChartData(homeData)}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 10, left: 0, bottom: 5 }}  // モバイルではマージンを小さく
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke={alpha('#4158D0', 0.05)} />
                     <XAxis 
@@ -1663,11 +1737,11 @@ export default function HomeDashboard() {
         onClose={() => setTargetDialog(false)}
         PaperProps={{
           sx: {
-            borderRadius: '14px',
-            padding: '24px',
+            borderRadius: { xs: '10px', md: '14px' },  // モバイルでは角丸を小さく
+            padding: { xs: '16px', md: '24px' },  // モバイルではパディングを小さく
             background: '#fbf8f4',
-            width: '300px',  // 幅を300pxに縮小
-            minHeight: '260px',  // 高さを縮小
+            width: { xs: '280px', md: '300px' },  // モバイルでは幅を小さく
+            minHeight: { xs: '220px', md: '260px' },  // モバイルでは高さを小さく
             maxWidth: '90vw',
             display: 'flex',
             flexDirection: 'column',
@@ -1685,10 +1759,10 @@ export default function HomeDashboard() {
             fontWeight: 600,  // フォントウェイトを調整
             color: '#262724',
             textAlign: 'center',
-            fontSize: '1.2rem',  // フォントサイズを縮小
+            fontSize: { xs: '1.1rem', md: '1.2rem' },  // モバイルではフォントサイズを小さく
             px: 0,
             pt: 0,
-            pb: 2
+            pb: { xs: 1, md: 2 }  // モバイルではパディングを小さく
           }}>
             目標獲得数設定
           </DialogTitle>
@@ -1711,16 +1785,16 @@ export default function HomeDashboard() {
               onChange={(e) => setNewTarget(e.target.value)}
               InputProps={{
                 sx: {
-                  width: '240px',  // 幅を240pxに拡大
-                  height: '52px',  // 高さを52pxに調整
-                  borderRadius: '12px',
+                  width: { xs: '220px', md: '240px' },  // モバイルでは幅を小さく
+                  height: { xs: '46px', md: '52px' },  // モバイルでは高さを小さく
+                  borderRadius: { xs: '10px', md: '12px' },  // モバイルでは角丸を小さく
                   backgroundColor: alpha('#3B82F6', 0.1),  // 背景色を少し濃く
-                  fontSize: '1.05rem',  // フォントサイズ微調整
+                  fontSize: { xs: '1rem', md: '1.05rem' },  // モバイルではフォントサイズを小さく
                   '& input': {
                     textAlign: 'center',
-                    padding: '14px',  // パディングを増加
+                    padding: { xs: '10px', md: '14px' },  // モバイルではパディングを小さく
                     '&::placeholder': {
-                      fontSize: '0.92rem',  // プレースホルダーサイズ調整
+                      fontSize: { xs: '0.85rem', md: '0.92rem' },  // モバイルではプレースホルダーサイズを小さく
                       color: alpha('#262724', 0.5)  // 色を少し濃く
                     }
                   }
@@ -1731,15 +1805,16 @@ export default function HomeDashboard() {
 
           <DialogActions sx={{ 
             width: '100%',
-            pt: 2,
+            pt: { xs: 1, md: 2 },  // モバイルではパディングを小さく
             px: 0,
             justifyContent: 'center',  // ボタンを中央揃え
-            gap: 2
+            gap: { xs: 1, md: 2 }  // モバイルではギャップを小さく
           }}>
             <Button 
               onClick={() => setTargetDialog(false)}
               sx={{
                 color: '#666',
+                fontSize: { xs: '0.85rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
                 '&:hover': {
                   backgroundColor: alpha('#3B82F6', 0.1)
                 }
@@ -1753,6 +1828,7 @@ export default function HomeDashboard() {
               sx={{
                 backgroundColor: '#3B82F6',
                 borderRadius: '8px',
+                fontSize: { xs: '0.85rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
                 '&:hover': {
                   backgroundColor: alpha('#3B82F6', 0.8)
                 }
