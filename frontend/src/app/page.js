@@ -1,14 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    router.push('/register');
+    // クライアントサイドでのみ実行されるようにする
+    if (typeof window !== 'undefined') {
+      // ログイン済みかどうかを確認
+      const token = localStorage.getItem('accessToken');
+      
+      if (token) {
+        // ログイン済みの場合はホームダッシュボードへ
+        router.push('/home');
+      } else {
+        // 未ログインの場合はログインページへ
+        router.push('/login');
+      }
+    }
+    setIsLoading(false);
   }, [router]);
   
   return (

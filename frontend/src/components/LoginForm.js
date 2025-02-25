@@ -340,6 +340,25 @@ export default function LoginForm() {
                   </Grid>
                 </Grid>
               </form>
+
+              <Box sx={{ mt: 3, textAlign: 'center' }}>
+                <Typography variant="body2" sx={{ color: '#666' }}>
+                  アカウントをお持ちでない方は
+                  <Button 
+                    onClick={() => router.push('/register')}
+                    sx={{ 
+                      ml: 1,
+                      color: '#3B82F6',
+                      fontWeight: 600,
+                      '&:hover': {
+                        backgroundColor: alpha('#3B82F6', 0.1)
+                      }
+                    }}
+                  >
+                    新規会員登録
+                  </Button>
+                </Typography>
+              </Box>
             </Box>
           </motion.div>
         </Container>
