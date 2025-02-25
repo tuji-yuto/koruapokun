@@ -40,6 +40,9 @@ import { ResponsiveContainer } from 'recharts';
 import { Person, Edit } from '@mui/icons-material';
 import { alpha } from '@mui/material/styles';
 
+// APIのベースURL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://koruapokun-4.onrender.com';
+
 // アニメーション設定
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -124,7 +127,7 @@ const refreshToken = async () => {
       return false;
     }
     
-    const response = await fetch('http://localhost:8000/api/token/refresh/', {
+    const response = await fetch(`${API_BASE_URL}/api/token/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -157,7 +160,7 @@ const verifyToken = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) return false;
 
-    const response = await fetch('http://localhost:8000/api/token/verify/', {
+    const response = await fetch(`${API_BASE_URL}/api/token/verify/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -502,7 +505,7 @@ export default function HomeDashboard() {
   const fetchMonthlyTarget = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/monthly-target/?year_month=${getCurrentYearMonth()}`,
+        `${API_BASE_URL}/api/monthly-target/?year_month=${getCurrentYearMonth()}`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -513,9 +516,16 @@ export default function HomeDashboard() {
       if (response.ok) {
         const data = await response.json();
         setMonthlyTarget(data);
+      } else {
+        console.error('月次目標取得エラー:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching monthly target:', error);
+      console.error('月次目標取得エラー:', error);
+      setSnackbar({
+        open: true,
+        message: `月次目標取得中にエラーが発生しました: ${error.message || '不明なエラー'}`,
+        severity: 'error'
+      });
     }
   };
   
@@ -529,7 +539,7 @@ export default function HomeDashboard() {
   const handleSaveTarget = async () => {
     try {
       // 既存レコードが無い場合は、リソースIDとして「年-月」を利用
-      let url = `http://localhost:8000/api/monthly-target/${getCurrentYearMonth()}/`;
+      let url = `${API_BASE_URL}/api/monthly-target/${getCurrentYearMonth()}/`;
       
       const response = await fetch(
         url,
@@ -585,7 +595,7 @@ export default function HomeDashboard() {
       }
       
       // データ取得処理を続行
-      const res = await fetch('http://localhost:8000/api/home-data/', {
+      const res = await fetch(`${API_BASE_URL}/api/home-data/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -594,9 +604,16 @@ export default function HomeDashboard() {
       if (res.ok) {
         const data = await res.json();
         setHomeData(data);
+      } else {
+        console.error('ホームデータ取得エラー:', res.status, res.statusText);
       }
     } catch (error) {
-      console.error('Data fetch error:', error);
+      console.error('データ取得エラー:', error);
+      setSnackbar({
+        open: true,
+        message: `データ取得中にエラーが発生しました: ${error.message || '不明なエラー'}`,
+        severity: 'error'
+      });
     }
   };
 
@@ -695,12 +712,12 @@ export default function HomeDashboard() {
 
       const existingData = await checkExistingData(selectedDate);
       
-      let url = 'http://localhost:8000/api/home-data/';
+      let url = `${API_BASE_URL}/api/home-data/`;
       let method = 'POST';
       
       // 既存データがある場合はPUTリクエストに変更
       if (existingData) {
-        url = `http://localhost:8000/api/home-data/${existingData.id}/`;
+        url = `${API_BASE_URL}/api/home-data/${existingData.id}/`;
         method = 'PUT';
       }
 
@@ -762,7 +779,7 @@ export default function HomeDashboard() {
   const checkExistingData = async (date) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/home-data/?date=${date}`,
+        `${API_BASE_URL}/api/home-data/?date=${date}`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -783,7 +800,7 @@ export default function HomeDashboard() {
 
   const fetchMonthlySummary = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/monthly-summary/', {
+      const response = await fetch(`${API_BASE_URL}/api/monthly-summary/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -834,7 +851,7 @@ export default function HomeDashboard() {
 
   const fetchDailySummary = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/daily-summary/', {
+      const response = await fetch(`${API_BASE_URL}/api/daily-summary/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -882,7 +899,7 @@ export default function HomeDashboard() {
   // ユーザー名取得
   const fetchCurrentUser = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/current-user/', {
+      const response = await fetch(`${API_BASE_URL}/api/current-user/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
