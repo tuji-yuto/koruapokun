@@ -54,6 +54,9 @@ const schema = z.object({
     )
 });
 
+// APIのベースURL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://koruapokun-4.onrender.com';
+
 export default function RegistrationForm() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema)
@@ -68,10 +71,11 @@ export default function RegistrationForm() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:8000/api/auth/register/', data);
+      await axios.post(`${API_BASE_URL}/api/auth/register/`, data);
       setSuccess(true);
       setTimeout(() => router.push('/login'), 2000);
     } catch (err) {
+      console.error('Registration error:', err);
       setError(err.response?.data?.message || '登録に失敗しました');
     } finally {
       setLoading(false);
