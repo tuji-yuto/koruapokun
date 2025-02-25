@@ -1318,7 +1318,7 @@ export default function HomeDashboard() {
                       backgroundColor: alpha('#3B82F6', 0.05)
                     }
                   }}>
-                    <Table size={{'xs': 'small', 'md': 'medium'}}>  {/* モバイルではテーブルサイズを小さく */}
+                    <Table size="small">  {/* モバイルではテーブルサイズを小さく */}
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>項目</TableCell>
@@ -1419,7 +1419,7 @@ export default function HomeDashboard() {
                             <span style={{ 
                               color: '#262724',
                               fontWeight: 500,
-                              fontSize: window.innerWidth < 600 ? '0.7rem' : '0.8rem'  // モバイルではフォントサイズを小さく
+                              fontSize: '0.7rem'  // 静的な値に変更
                             }}>
                               {value}
                             </span>
@@ -1480,7 +1480,7 @@ export default function HomeDashboard() {
                       backgroundColor: alpha('#3B82F6', 0.05)
                     }
                   }}>
-                    <Table size={{'xs': 'small', 'md': 'medium'}}>  {/* モバイルではテーブルサイズを小さく */}
+                    <Table size="small">  {/* モバイルではテーブルサイズを小さく */}
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>項目</TableCell>
@@ -1582,7 +1582,7 @@ export default function HomeDashboard() {
                             <span style={{ 
                               color: '#262724',
                               fontWeight: 500,
-                              fontSize: window.innerWidth < 600 ? '0.7rem' : '0.8rem'  // モバイルではフォントサイズを小さく
+                              fontSize: '0.7rem'  // 静的な値に変更
                             }}>
                               {value}
                             </span>
@@ -1638,11 +1638,12 @@ export default function HomeDashboard() {
                       label={{ 
                         value: '日付', 
                         position: 'bottom',
-                        offset: 0 
+                        offset: 0,
+                        style: { fontSize: '0.8rem' }  // 静的な値に変更
                       }}
-                      tick={{ fill: '#262724' }}
+                      tick={{ fill: '#262724', fontSize: '0.8rem' }}  // 静的な値に変更
                       interval="preserveStartEnd"
-                      minTickGap={20}
+                      minTickGap={10}  // モバイルではギャップを小さく
                       angle={-45}
                       textAnchor="end"
                       height={70}
@@ -1652,9 +1653,10 @@ export default function HomeDashboard() {
                         value: '数値', 
                         angle: -90, 
                         position: 'insideLeft',
-                        fill: '#262724'
+                        fill: '#262724',
+                        style: { fontSize: '0.8rem' }  // 静的な値に変更
                       }}
-                      tick={{ fill: '#262724' }}
+                      tick={{ fill: '#262724', fontSize: '0.8rem' }}  // 静的な値に変更
                     />
                     <Tooltip 
                       contentStyle={{
@@ -1663,16 +1665,19 @@ export default function HomeDashboard() {
                         borderRadius: '8px',
                         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
                         color: '#262724',
+                        fontSize: '0.8rem'  // 静的な値に変更
                       }}
                     />
                     <Legend 
                       wrapperStyle={{ 
                         paddingTop: 20,
+                        fontSize: '0.8rem'  // 静的な値に変更
                       }}
                       formatter={(value) => (
                         <span style={{ 
                           color: '#262724',
-                          fontWeight: 500
+                          fontWeight: 500,
+                          fontSize: '0.8rem'  // 静的な値に変更
                         }}>
                           {value}
                         </span>
@@ -1694,14 +1699,14 @@ export default function HomeDashboard() {
                           type="monotone"
                           dataKey={dataKeys[index]}
                           stroke={lineColors[index]}
-                          strokeWidth={2}
+                          strokeWidth={1.5}  // 静的な値に変更
                           dot={{ 
-                            r: 4,
+                            r: 3,  // 静的な値に変更
                             fill: lineColors[index],
                             strokeWidth: 0
                           }}
                           activeDot={{ 
-                            r: 6,
+                            r: 5,  // 静的な値に変更
                             fill: lineColors[index],
                             strokeWidth: 0
                           }}
