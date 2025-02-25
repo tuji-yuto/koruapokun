@@ -46,6 +46,9 @@ const schema = z.object({
     .min(8, "8文字以上必要です")
 });
 
+// APIのベースURL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://koruapokun-4.onrender.com';
+
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema)
@@ -59,7 +62,7 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     setLoading(true);  // ローディング開始
     try {
-      const res = await fetch('http://localhost:8000/api/auth/login/', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -75,7 +78,8 @@ export default function LoginForm() {
         setError(errorData.detail || "認証に失敗しました");
       }
     } catch (err) {
-      setError("サーバー接続エラーが発生しました");
+      console.error("ログインエラー:", err);
+      setError(`サーバー接続エラーが発生しました: ${err.message || "不明なエラー"}`);
     } finally {
       setLoading(false);  // ローディング終了
     }
