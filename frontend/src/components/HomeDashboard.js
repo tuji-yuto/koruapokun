@@ -1091,6 +1091,26 @@ export default function HomeDashboard() {
       
       {/* コンテンツ */}
       <Box sx={{ position: 'relative', zIndex: 2 }}>
+        {/* ヘッダー画像 */}
+        <Box sx={{ 
+          width: '100%', 
+          overflow: 'hidden',
+          mb: 2,
+          borderRadius: { xs: '0', md: '0 0 12px 12px' },
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+        }}>
+          <img 
+            src="/images/ヘッダー画像.png" 
+            alt="ヘッダー画像" 
+            style={{ 
+              width: '100%', 
+              height: 'auto',
+              display: 'block',
+              objectFit: 'cover'
+            }} 
+          />
+        </Box>
+        
         {/* ヘッダー部分 */}
         <AppBar 
           position="sticky" 
