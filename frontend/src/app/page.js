@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-50">
       <div className="text-center space-y-8 p-8">
-        <div className="relative w-64 h-64 mx-auto mb-6">
+        <div className="relative w-[576px] h-[576px] mx-auto mb-6">
           <Image
             src="/images/ヘッダー画像.png"
             alt="ヘッダー画像"
@@ -46,7 +46,7 @@ export default function Home() {
           />
         </div>
         <h1 className="text-4xl font-bold text-gray-900 mb-8 animate-fade-in">
-          ヘッダー画像.pngへようこそ！
+          ようこそ！
         </h1>
         <div className="space-x-6">
           <button
