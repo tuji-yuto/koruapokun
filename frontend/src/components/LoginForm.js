@@ -113,7 +113,7 @@ export default function LoginForm() {
               sx={{
                 p: 4,
                 borderRadius: '20px',
-                background: '#fbf8f4',
+                background: '#f5f7fa',
                 border: `1px solid ${alpha('#3B82F6', 0.2)}`,
                 boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
               }}
@@ -155,7 +155,7 @@ export default function LoginForm() {
                       helperText={errors.username?.message}
                       sx={{
                         '& .MuiOutlinedInput-root': {
-                          backgroundColor: '#fbf8f4',
+                          backgroundColor: '#f5f7fa',
                           borderRadius: '8px',
                           border: `1px solid ${alpha('#3B82F6', 0.2)}`,
                           fontSize: '1.2rem',
@@ -196,7 +196,7 @@ export default function LoginForm() {
                       helperText={errors.password?.message}
                       sx={{
                         '& .MuiOutlinedInput-root': {
-                          backgroundColor: '#fbf8f4',
+                          backgroundColor: '#f5f7fa',
                           borderRadius: '8px',
                           border: `1px solid ${alpha('#3B82F6', 0.2)}`,
                           fontSize: '1.2rem',

@@ -90,7 +90,7 @@ const ProgressDisplay = ({ value = 0, isLoading = false }) => {
           height: 20, 
           borderRadius: 2,
           '& .MuiLinearProgress-bar': { backgroundColor: '#3B82F6' },
-          '& .MuiLinearProgress-root': { backgroundColor: '#fbf8f4' }
+          '& .MuiLinearProgress-root': { backgroundColor: '#f5f7fa' }
         }}
       />
     </Box>
@@ -935,7 +935,7 @@ export default function HomeDashboard() {
         mb: 4,
         p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
         borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-        background: '#fbf8f4',
+        background: '#f5f7fa',
         border: `1px solid ${alpha('#3B82F6', 0.2)}`,
         boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
       }}>
@@ -1030,7 +1030,7 @@ export default function HomeDashboard() {
                   value={achievementRate}
                   sx={{
                     '& .MuiLinearProgress-root': {
-                      background: '#fbf8f4',
+                      background: '#f5f7fa',
                     },
                     '& .MuiLinearProgress-bar': {
                       background: '#3B82F6'
@@ -1067,7 +1067,7 @@ export default function HomeDashboard() {
   const commonBoxStyle = {
     p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
     borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-    background: '#fbf8f4',
+    background: '#f5f7fa',
     border: `1px solid ${alpha('#3B82F6', 0.2)}`,
     boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
   };
@@ -1076,7 +1076,7 @@ export default function HomeDashboard() {
   const innerBoxStyle = {
     p: { xs: 2, md: 3 },  // モバイルではパディングを小さく
     borderRadius: { xs: '10px', md: '15px' },  // モバイルでは角丸を小さく
-    background: '#fbf8f4',
+    background: '#f5f7fa',
     border: `1px solid ${alpha('#3B82F6', 0.15)}`,
   };
 
@@ -1211,7 +1211,7 @@ export default function HomeDashboard() {
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
-              background: '#fbf8f4',
+              background: '#f5f7fa',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               '&:hover': {
                 transform: 'translateY(-2px)',
@@ -1223,7 +1223,7 @@ export default function HomeDashboard() {
               mb: 4,
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-              background: '#fbf8f4',
+              background: '#f5f7fa',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1257,7 +1257,7 @@ export default function HomeDashboard() {
               mt: 4,
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-              background: '#fbf8f4',
+              background: '#f5f7fa',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1281,7 +1281,7 @@ export default function HomeDashboard() {
                 {/* テーブル部分 (左半分) */}
                 <Grid item xs={12} md={6}>
                   <TableContainer component={Paper} sx={{
-                    backgroundColor: '#fbf8f4',  // テーブル背景色変更
+                    backgroundColor: '#f5f7fa',  // テーブル背景色変更
                     '& .MuiTableCell-head': {
                       fontWeight: 600,
                       backgroundColor: alpha('#3B82F6', 0.1),
@@ -1348,7 +1348,7 @@ export default function HomeDashboard() {
                 <Grid item xs={12} md={6}>
                   <Paper sx={{ 
                     ...innerBoxStyle,
-                    background: '#fbf8f4',  // 明示的に指定
+                    background: '#f5f7fa',  // 明示的に指定
                     height: '100%',
                     p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                   }}>
@@ -1387,7 +1387,7 @@ export default function HomeDashboard() {
                         <Tooltip 
                           formatter={(value) => `${value.toFixed(1)}%`}
                           contentStyle={{
-                            background: '#fbf8f4',
+                            background: '#f5f7fa',
                             border: `1px solid ${alpha('#3B82F6', 0.1)}`,
                             borderRadius: theme.shape.borderRadius,
                             color: '#262724',
@@ -1418,7 +1418,7 @@ export default function HomeDashboard() {
               mt: 4,
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-              background: '#fbf8f4',
+              background: '#f5f7fa',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1442,7 +1442,7 @@ export default function HomeDashboard() {
                 {/* テーブル部分 (左半分) */}
                 <Grid item xs={12} md={6}>
                   <TableContainer component={Paper} sx={{
-                    backgroundColor: '#fbf8f4',
+                    backgroundColor: '#f5f7fa',
                     '& .MuiTableCell-head': {
                       fontWeight: 600,
                       backgroundColor: alpha('#3B82F6', 0.1),
@@ -1505,7 +1505,7 @@ export default function HomeDashboard() {
                 <Grid item xs={12} md={6}>
                   <Paper sx={{ 
                     ...innerBoxStyle,
-                    background: '#fbf8f4',  // 明示的に指定
+                    background: '#f5f7fa',  // 明示的に指定
                     height: '100%',
                     p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                   }}>
@@ -1547,7 +1547,7 @@ export default function HomeDashboard() {
                         <Tooltip 
                           formatter={(value) => `${value.toFixed(1)}%`}
                           contentStyle={{
-                            background: '#fbf8f4',
+                            background: '#f5f7fa',
                             border: `1px solid ${alpha('#3B82F6', 0.1)}`,
                             borderRadius: theme.shape.borderRadius,
                             color: '#262724',
@@ -1580,7 +1580,7 @@ export default function HomeDashboard() {
               mt: 4,
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-              background: '#fbf8f4',
+              background: '#f5f7fa',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1604,7 +1604,7 @@ export default function HomeDashboard() {
                 p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                 width: '100%',
                 height: { xs: 400, md: 500 },  // モバイルでは高さを小さく
-                background: '#fbf8f4',  // 明示的に指定
+                background: '#f5f7fa',  // 明示的に指定
               }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
@@ -1639,7 +1639,7 @@ export default function HomeDashboard() {
                     />
                     <Tooltip 
                       contentStyle={{
-                        backgroundColor: '#fbf8f4',
+                        backgroundColor: '#f5f7fa',
                         border: `1px solid ${alpha('#4158D0', 0.1)}`,
                         borderRadius: '8px',
                         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
@@ -1723,7 +1723,7 @@ export default function HomeDashboard() {
           sx: {
             borderRadius: { xs: '10px', md: '14px' },  // モバイルでは角丸を小さく
             padding: { xs: '16px', md: '24px' },  // モバイルではパディングを小さく
-            background: '#fbf8f4',
+            background: '#f5f7fa',
             width: { xs: '280px', md: '300px' },  // モバイルでは幅を小さく
             minHeight: { xs: '220px', md: '260px' },  // モバイルでは高さを小さく
             maxWidth: '90vw',
