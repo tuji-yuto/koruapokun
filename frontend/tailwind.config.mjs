@@ -30,6 +30,15 @@ export default {
         sans: ['var(--font-geist-sans)'],  // サンセリフ
         mono: ['var(--font-geist-mono)'],  // 等幅
       },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        }
+      },
+      animation: {
+        'fade-in': 'fade-in 0.6s ease-out'
+      }
     },
   },
   // 拡張プラグイン

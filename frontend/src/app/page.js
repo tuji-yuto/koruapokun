@@ -36,22 +36,34 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-50">
       <div className="text-center space-y-8 p-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          営業活動管理アプリへようこそ
+        <div className="relative w-64 h-64 mx-auto mb-6">
+          <Image
+            src="/images/ヘッダー画像.png"
+            alt="ヘッダー画像"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8 animate-fade-in">
+          ヘッダー画像.pngへようこそ！
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          効率的な営業活動の管理と分析をサポートします
-        </p>
-        <div className="space-x-4">
+        <div className="space-x-6">
           <button
             onClick={() => router.push('/login')}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="transform hover:scale-105 transition-all duration-300 ease-in-out
+                     bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold
+                     hover:bg-blue-700 hover:shadow-lg
+                     active:scale-95 active:shadow-inner"
           >
             ログイン
           </button>
           <button
             onClick={() => router.push('/register')}
-            className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors"
+            className="transform hover:scale-105 transition-all duration-300 ease-in-out
+                     bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold
+                     border-2 border-blue-600 hover:bg-blue-50 hover:shadow-lg
+                     active:scale-95 active:shadow-inner"
           >
             新規会員登録
           </button>
