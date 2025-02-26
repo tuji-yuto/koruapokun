@@ -936,7 +936,6 @@ export default function HomeDashboard() {
         p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
         borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
         background: '#fbf8f4',
-        backdropFilter: 'blur(10px)',
         border: `1px solid ${alpha('#3B82F6', 0.2)}`,
         boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
       }}>
@@ -1069,7 +1068,6 @@ export default function HomeDashboard() {
     p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
     borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
     background: '#fbf8f4',
-    backdropFilter: 'blur(10px)',
     border: `1px solid ${alpha('#3B82F6', 0.2)}`,
     boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
   };
@@ -1084,24 +1082,12 @@ export default function HomeDashboard() {
 
   return (
     <Box sx={{ 
-      position: 'relative', // オーバーレイを配置するために必要
+      position: 'relative',
       flexGrow: 1,
       pb: 4,
-      backgroundImage: 'url(/images/haikei.jpg)', // 背景画像を設定
-      backgroundSize: 'cover', // 画像をカバーするように設定
-      backgroundPosition: 'center', // 画像の位置を中央に設定
-      backgroundRepeat: 'no-repeat' // 画像の繰り返しを無効に
+      backgroundColor: '#FFFFFF', // 白の単色背景に変更
     }}>
-      {/* 白靄のオーバーレイ */}
-      <Box sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', // 半透明の白
-        zIndex: 1 // コンテンツの下に配置
-      }} />
+      {/* 白の背景のみにするため、オーバーレイを削除 */}
       
       {/* コンテンツ */}
       <Box sx={{ position: 'relative', zIndex: 2 }}>
@@ -1109,13 +1095,12 @@ export default function HomeDashboard() {
         <AppBar 
           position="sticky" 
           sx={{ 
-            background: alpha('#3B82F6', 0.8),  // 不透明度80%に変更
-            backdropFilter: 'blur(10px)',  // 背景ぼかし追加
-            boxShadow: '0 2px 15px rgba(59, 130, 246, 0.2)',  // シャドウを軽量化
+            background: alpha('#3B82F6', 0.8),
+            boxShadow: '0 2px 15px rgba(59, 130, 246, 0.2)',
             mb: 4,
-            borderBottom: `1px solid ${alpha('#FFFFFF', 0.3)}`,  // ボーダーを強調
+            borderBottom: `1px solid ${alpha('#FFFFFF', 0.3)}`,
             border: 'none',
-            backgroundColor: 'transparent'  // 背景色を透明に
+            backgroundColor: 'transparent'
           }}
         >
           <Toolbar sx={{ 
@@ -1167,7 +1152,6 @@ export default function HomeDashboard() {
                 py: 1,
                 borderRadius: '8px',
                 background: alpha('#FFFFFF', 0.2),
-                backdropFilter: 'blur(5px)'
               }}>
                 <Person sx={{ 
                   fontSize: { xs: '1.2rem', md: '1.4rem' },  // モバイルではアイコンを小さく
@@ -1225,7 +1209,6 @@ export default function HomeDashboard() {
             px: { xs: 1, sm: 1, md: 2 },  // 左右の余白を狭く設定（xs: 8px, md: 16px）
             '& .MuiPaper-root': {
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
-              backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
               background: '#fbf8f4',
@@ -1241,7 +1224,6 @@ export default function HomeDashboard() {
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
-              backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1276,7 +1258,6 @@ export default function HomeDashboard() {
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
-              backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1438,7 +1419,6 @@ export default function HomeDashboard() {
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
-              backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>
@@ -1601,7 +1581,6 @@ export default function HomeDashboard() {
               p: { xs: 2, md: 4 },  // モバイルではパディングを小さく
               borderRadius: { xs: '12px', md: '20px' },  // モバイルでは角丸を小さく
               background: '#fbf8f4',
-              backdropFilter: 'blur(10px)',
               border: `1px solid ${alpha('#3B82F6', 0.2)}`,
               boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
             }}>

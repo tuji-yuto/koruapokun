@@ -97,21 +97,9 @@ export default function LoginForm() {
     <Box sx={{ 
       position: 'relative',
       minHeight: '100vh',
-      backgroundImage: 'url(/images/haikei.jpg)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat'
+      backgroundColor: '#FFFFFF', // 白の単色背景に変更
     }}>
-      {/* 白いオーバーレイ */}
-      <Box sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        zIndex: 1
-      }} />
+      {/* 白の背景のみにするため、オーバーレイを削除 */}
       
       <Box sx={{ position: 'relative', zIndex: 2, pt: 8 }}>
         <Container maxWidth="sm">
@@ -126,7 +114,6 @@ export default function LoginForm() {
                 p: 4,
                 borderRadius: '20px',
                 background: '#fbf8f4',
-                backdropFilter: 'blur(10px)',
                 border: `1px solid ${alpha('#3B82F6', 0.2)}`,
                 boxShadow: '0 4px 30px rgba(59, 130, 246, 0.1)',
               }}
