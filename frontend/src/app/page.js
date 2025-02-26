@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-50">
       <div className="text-center">
-        <div className="relative w-[576px] h-[576px] mx-auto">
+        <div className="relative w-[960px] h-[260px] mx-auto">
           <Image
             src="/images/ヘッダー画像.png"
             alt="ヘッダー画像"
@@ -45,10 +45,10 @@ export default function Home() {
             priority
           />
         </div>
-        <h1 className="text-4xl font-bold text-gray-900 animate-fade-in -mt-4">
+        <h1 className="text-4xl font-bold text-gray-900 animate-fade-in mt-2">
           ようこそ！
         </h1>
-        <div className="mt-2">
+        <div className="mt-4">
           <button
             onClick={() => router.push('/login')}
             className="transform hover:scale-105 transition-all duration-300 ease-in-out
