@@ -1109,58 +1109,18 @@ export default function HomeDashboard() {
             px: { xs: 1, sm: 2, md: 4 },  // モバイルでは左右パディングを小さく
             background: 'transparent'  // ツールバー背景も透明に
           }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               {/* ヘッダー画像 */}
               <Box
                 component="img"
                 src="/images/ヘッダー画像.png" 
                 alt="ヘッダー画像"
                 sx={{
-                  height: { xs: '32px', sm: '36px', md: '40px' },
+                  height: { xs: '40px', sm: '48px', md: '56px' },
                   width: 'auto',
-                  borderRadius: '4px',
-                  mr: { xs: 0.75, md: 1.5 }
+                  borderRadius: '4px'
                 }}
               />
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography 
-                  variant="h5" 
-                  component="div" 
-                  sx={{ 
-                    fontFamily: 'Noto Sans JP, sans-serif',
-                    fontWeight: 700,
-                    color: '#262724',
-                    fontSize: { xs: '1rem', sm: '1.2rem', md: '1.3rem' },  // モバイルではフォントサイズを小さく
-                    display: { xs: 'none', sm: 'block' }  // モバイルでは非表示
-                  }}
-                >
-                  コール管理システム こるあぽくん
-                </Typography>
-                <Typography 
-                  variant="h5" 
-                  component="div" 
-                  sx={{ 
-                    fontFamily: 'Noto Sans JP, sans-serif',
-                    fontWeight: 700,
-                    color: '#262724',
-                    fontSize: '1rem',
-                    display: { xs: 'block', sm: 'none' }  // モバイルのみ表示
-                  }}
-                >
-                  こるあぽくん
-                </Typography>
-                <Box
-                  component="img"
-                  src="/images/tori.png" 
-                  alt="Icon"
-                  sx={{
-                    width: { xs: '24px', sm: '28px', md: '30px' },
-                    height: { xs: '24px', sm: '28px', md: '30px' },
-                    borderRadius: '50%',
-                    ml: { xs: 0.5, sm: 0.75, md: 1 }
-                  }}
-                />
-              </Box>
             </Box>
             
             <Box sx={{ 
