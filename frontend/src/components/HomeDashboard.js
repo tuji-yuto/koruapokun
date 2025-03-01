@@ -110,7 +110,7 @@ const getUsernameFromToken = () => {
     return 'ユーザー';
   }
 };
-
+ー
 // データ有無チェック関数
 const hasValidData = (data) => {
   return data && 
@@ -746,7 +746,6 @@ export default function HomeDashboard() {
         // 保存成功後に全てのデータを再取得
         await fetchHomeData();
         await fetchMonthlySummary();
-        await fetchMonthlyTarget();  // 月次目標も再取得
         
         setSnackbar({
           open: true,
