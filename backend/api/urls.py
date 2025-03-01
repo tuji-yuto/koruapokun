@@ -13,7 +13,6 @@ from .views import (
     HomeDataRetrieveUpdateAPIView,
     MonthlyTargetAPIView,
     MonthlySummaryAPI,
-    DailySummaryAPI,
     CurrentUserAPI,
 )
 
@@ -33,6 +32,5 @@ urlpatterns = [
     # 目標・分析関連
     path('monthly-target/', MonthlyTargetAPIView.as_view(), name='monthly-target'),  # 月間目標設定・取得
     path('monthly-target/<str:year_month>/', MonthlyTargetAPIView.as_view(), name='monthly-target-detail'),  # 特定月の目標管理
-    path('monthly-summary/', MonthlySummaryAPI.as_view(), name='monthly-summary'),  # 月間実績集計・分析
-    path('daily-summary/', DailySummaryAPI.as_view(), name='daily-summary'),  # 日次実績集計・分析
+    path('monthly-summary/', MonthlySummaryAPI.as_view(), name='monthly-summary'),  # 月間・日次実績集計・分析（統合API）
 ]

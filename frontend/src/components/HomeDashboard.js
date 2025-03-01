@@ -746,7 +746,6 @@ export default function HomeDashboard() {
         // 保存成功後に全てのデータを再取得
         await fetchHomeData();
         await fetchMonthlySummary();
-        await fetchDailySummary();
         await fetchMonthlyTarget();  // 月次目標も再取得
         
         setSnackbar({
@@ -825,6 +824,19 @@ export default function HomeDashboard() {
             acquisition_rate: 0,
             progress_rate: 0,
           });
+          setDailyPerformance({
+            details: {
+              daily_call: 0,
+              daily_catch: 0,
+              daily_re_call: 0,
+              daily_prospective: 0,
+              daily_approach_ng: 0,
+              daily_product_ng: 0,
+              daily_acquisition: 0
+            }
+          });
+          // グラフデータも空にセット
+          setHomeData([]);
           return;
         }
         console.error('API error');
@@ -832,9 +844,19 @@ export default function HomeDashboard() {
       }
 
       const data = await response.json();
-      setMonthlyPerformance(data);
+      
+      // 月間データをセット
+      setMonthlyPerformance(data.monthly);
+      
+      // 日次データをセット
+      setDailyPerformance(data.daily);
+      
+      // グラフ用データをセット
+      if (data.daily_records && data.daily_records.length > 0) {
+        setHomeData(data.daily_records);
+      }
     } catch (error) {
-      console.error('Error fetching monthly summary:', error.message);
+      console.error('Error fetching summary data:', error.message);
       // エラー時も空データをセット
       setMonthlyPerformance({
         details: {
@@ -849,37 +871,6 @@ export default function HomeDashboard() {
         acquisition_rate: 0,
         progress_rate: 0,
       });
-    }
-  };
-
-  const fetchDailySummary = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/daily-summary/`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      });
-
-      if (!response.ok) {
-        console.error('Daily summary fetch failed');
-        return;
-      }
-
-      const data = await response.json();
-      setDailyPerformance({
-        ...data,
-        details: data.details || {
-          daily_call: 0,
-          daily_catch: 0,
-          daily_re_call: 0,
-          daily_prospective: 0,
-          daily_approach_ng: 0,
-          daily_product_ng: 0,
-          daily_acquisition: 0
-        }
-      });
-    } catch (error) {
-      console.error('Error fetching daily summary:', error.message);
       setDailyPerformance({
         details: {
           daily_call: 0,
@@ -896,7 +887,6 @@ export default function HomeDashboard() {
 
   useEffect(() => {
     fetchMonthlySummary();
-    fetchDailySummary();
   }, []);
 
   // ユーザー名取得
@@ -917,7 +907,6 @@ export default function HomeDashboard() {
   useEffect(() => {
     fetchCurrentUser();
     fetchMonthlySummary();
-    fetchDailySummary();
   }, []);
 
   // 月次目標の表示部分を修正

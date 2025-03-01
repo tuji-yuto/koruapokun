@@ -158,12 +158,12 @@ class BaseSummaryAPI(APIView):
 # 月間実績サマリーAPI
 class MonthlySummaryAPI(BaseSummaryAPI):
     """
-    月間の営業実績サマリーを集計するAPI
-    当月の実績と目標に対する進捗状況を計算して返す
+    月間および日次の営業実績サマリーを集計するAPI
+    当月の実績と目標に対する進捗状況、および当日のデータを計算して返す
     """
     def get(self, request):
         try:
-            # 現在の年月を取得
+            # 現在の年月日を取得
             today = timezone.now()
             year, month = today.year, today.month
             
@@ -224,8 +224,8 @@ class MonthlySummaryAPI(BaseSummaryAPI):
             # 月末獲得予測
             predicted_month_end_acquisition = average_daily_acquisition * num_days
 
-            # 結果の整形
-            results = {
+            # 月間サマリー結果の整形
+            monthly_results = {
                 're_call_rate': self.calculate_rate(monthly_data['total_re_call'], monthly_data['total_catch']),
                 'prospective_rate': self.calculate_rate(monthly_data['total_prospective'], monthly_data['total_catch']),
                 'approach_ng_rate': self.calculate_rate(monthly_data['total_approach_ng'], monthly_data['total_catch']),
@@ -240,6 +240,51 @@ class MonthlySummaryAPI(BaseSummaryAPI):
                 'predicted_month_end_acquisition': round(predicted_month_end_acquisition, 1)
             }
 
+            # 日次データの集計（DailySummaryAPIと同じロジック）
+            today_date = timezone.localdate()
+            daily_data = HomeData.objects.filter(
+                user=request.user,
+                date=today_date
+            ).aggregate(
+                daily_call=Sum('call_count'),
+                daily_catch=Sum('catch_count'),
+                daily_re_call=Sum('re_call_count'),
+                daily_prospective=Sum('prospective_count'),
+                daily_approach_ng=Sum('approach_ng_count'),
+                daily_product_ng=Sum('product_explanation_ng_count'),
+                daily_acquisition=Sum('acquisition_count')
+            )
+
+            # Noneを0に変換
+            daily_data = {k: (v if v is not None else 0) for k, v in daily_data.items()}
+            catch_count = daily_data['daily_catch']
+            
+            # 日次サマリー結果の整形
+            daily_results = {
+                're_call_rate': self.calculate_rate(daily_data['daily_re_call'], catch_count),
+                'prospective_rate': self.calculate_rate(daily_data['daily_prospective'], catch_count),
+                'approach_ng_rate': self.calculate_rate(daily_data['daily_approach_ng'], catch_count),
+                'product_ng_rate': self.calculate_rate(daily_data['daily_product_ng'], catch_count),
+                'acquisition_rate': self.calculate_rate(daily_data['daily_acquisition'], catch_count),
+                'details': daily_data
+            }
+
+            # 日毎のデータを取得（グラフ表示用）
+            daily_records = HomeData.objects.filter(
+                user=request.user,
+                date__year=year,
+                date__month=month
+            ).values('date', 'call_count', 'catch_count', 're_call_count', 
+                    'prospective_count', 'approach_ng_count', 
+                    'product_explanation_ng_count', 'acquisition_count')
+
+            # 統合結果
+            results = {
+                'monthly': monthly_results,
+                'daily': daily_results,
+                'daily_records': list(daily_records)
+            }
+
             return Response(results)
 
         except Exception as e:
@@ -247,45 +292,6 @@ class MonthlySummaryAPI(BaseSummaryAPI):
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-
-# 日次実績サマリーAPI
-class DailySummaryAPI(BaseSummaryAPI):
-    """
-    当日の営業実績サマリーを集計するAPI
-    各種指標の合計と比率を計算して返す
-    """
-    def get(self, request):
-        # 今日の日付でデータを集計
-        today = timezone.localdate()
-        daily_data = HomeData.objects.filter(
-            user=request.user,
-            date=today
-        ).aggregate(
-            daily_call=Sum('call_count'),
-            daily_catch=Sum('catch_count'),
-            daily_re_call=Sum('re_call_count'),
-            daily_prospective=Sum('prospective_count'),
-            daily_approach_ng=Sum('approach_ng_count'),
-            daily_product_ng=Sum('product_explanation_ng_count'),
-            daily_acquisition=Sum('acquisition_count')
-        )
-
-        # Noneを0に変換
-        daily_data = {k: (v if v is not None else 0) for k, v in daily_data.items()}
-        catch_count = daily_data['daily_catch']
-        
-        # 各種比率を計算
-        results = {
-            're_call_rate': self.calculate_rate(daily_data['daily_re_call'], catch_count),
-            'prospective_rate': self.calculate_rate(daily_data['daily_prospective'], catch_count),
-            'approach_ng_rate': self.calculate_rate(daily_data['daily_approach_ng'], catch_count),
-            'product_ng_rate': self.calculate_rate(daily_data['daily_product_ng'], catch_count),
-            'acquisition_rate': self.calculate_rate(daily_data['daily_acquisition'], catch_count),
-            'details': daily_data
-        }
-
-        return Response(results)
 
 
 # ログインユーザー情報API
