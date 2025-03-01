@@ -110,7 +110,7 @@ const getUsernameFromToken = () => {
     return 'ユーザー';
   }
 };
-ー
+
 // データ有無チェック関数
 const hasValidData = (data) => {
   return data && 
