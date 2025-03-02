@@ -43,8 +43,8 @@ export default function Home() {
           sx={{
             width: '100%',
             height: 'auto',
-            maxWidth: '1300px',
-            maxHeight: '450px',
+            maxWidth: '1100px',
+            maxHeight: '300px',
             objectFit: 'contain',
             my: 2
           }}

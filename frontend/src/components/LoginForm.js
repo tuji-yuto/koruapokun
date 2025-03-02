@@ -259,19 +259,6 @@ export default function LoginForm() {
                           また、他のサイトで使用したことのないパスワードを使用することをお勧めします。
                         </Typography>
                         <Box sx={{ mt: 1 }}>
-                          <Link 
-                            href="/register" 
-                            sx={{ 
-                              color: '#3B82F6', 
-                              textDecoration: 'none',
-                              fontWeight: 500,
-                              '&:hover': {
-                                textDecoration: 'underline'
-                              }
-                            }}
-                          >
-                            新規登録はこちら
-                          </Link>
                           <Tooltip title="パスワードが安全でないと思われる場合は、新規登録して安全なパスワードを設定することをお勧めします。" arrow>
                             <IconButton size="small" sx={{ ml: 0.5 }}>
                               <InfoIcon fontSize="small" />
