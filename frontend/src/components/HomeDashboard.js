@@ -541,7 +541,6 @@ export default function HomeDashboard() {
   // 目標設定を保存
   const handleSaveTarget = async () => {
     try {
-      // 既存レコードが無い場合は、リソースIDとして「年-月」を利用
       let url = `${API_BASE_URL}/api/monthly-target/${getCurrentYearMonth()}/`;
       
       const response = await fetch(
@@ -559,13 +558,18 @@ export default function HomeDashboard() {
       );
       
       if (response.ok) {
+        // MonthlyTargetAPIの保存が成功した後に実行
+        await fetchMonthlyTarget();  // 目標値を再取得
+        await fetchMonthlySummary(); // サマリーデータを再計算・取得
+        
         setSnackbar({
           open: true,
           message: '月次目標を保存しました',
           severity: 'success'
         });
-        fetchMonthlyTarget();
         setTargetDialog(false);
+      } else {
+        throw new Error('目標の保存に失敗しました');
       }
     } catch (error) {
       console.error('Error saving monthly target:', error);
