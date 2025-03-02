@@ -608,7 +608,7 @@ export default function HomeDashboard() {
       }
       
       // データ取得処理を続行
-      const res = await fetch(`${API_BASE_URL}/api/home-data/`, {
+      const res = await fetch(`${API_BASE_URL}/api/daily-record/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -725,12 +725,12 @@ export default function HomeDashboard() {
 
       const existingData = await checkExistingData(selectedDate);
       
-      let url = `${API_BASE_URL}/api/home-data/`;
+      let url = `${API_BASE_URL}/api/daily-record/`;
       let method = 'POST';
       
       // 既存データがある場合はPUTリクエストに変更
       if (existingData) {
-        url = `${API_BASE_URL}/api/home-data/${existingData.id}/`;
+        url = `${API_BASE_URL}/api/daily-record/${existingData.id}/`;
         method = 'PUT';
       }
 
@@ -790,7 +790,7 @@ export default function HomeDashboard() {
   const checkExistingData = async (date) => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/home-data/?date=${date}`,
+        `${API_BASE_URL}/api/daily-record/?date=${date}`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`

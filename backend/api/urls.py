@@ -26,8 +26,8 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # JWT認証トークン検証
     
     # 営業データ管理
-    path('home-data/', HomeDataListCreateAPIView.as_view(), name='home-data-list'),  # 営業データ一覧表示・新規作成
-    path('home-data/<int:pk>/', HomeDataRetrieveUpdateAPIView.as_view(), name='home-data-detail'),  # 営業データ詳細表示・更新
+    path('daily-record/', HomeDataListCreateAPIView.as_view(), name='daily-record-list'),  # 営業データ一覧表示・新規作成
+    path('daily-record/<int:pk>/', HomeDataRetrieveUpdateAPIView.as_view(), name='daily-record-detail'),  # 営業データ詳細表示・更新
     
     # 目標・分析関連
     path('monthly-target/', MonthlyTargetAPIView.as_view(), name='monthly-target'),  # 月間目標設定・取得
