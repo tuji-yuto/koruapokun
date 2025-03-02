@@ -244,13 +244,13 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
   const validateForm = () => {
     return (
       formData.date &&
-      formData.call_count > 0 &&
-      formData.catch_count > 0 &&
-      formData.re_call_count > 0 &&
-      formData.prospective_count > 0 &&
-      formData.approach_ng_count > 0 &&
-      formData.product_explanation_ng_count > 0 &&
-      formData.acquisition_count > 0
+      formData.call_count !== '' &&
+      formData.catch_count !== '' &&
+      formData.re_call_count !== '' &&
+      formData.prospective_count !== '' &&
+      formData.approach_ng_count !== '' &&
+      formData.product_explanation_ng_count !== '' &&
+      formData.acquisition_count !== ''
     );
   };
 
@@ -259,7 +259,7 @@ const InputForm = React.memo(({ onSubmit, formData, setFormData, loading }) => {
     if (!validateForm()) {
       setSnackbar({
         open: true,
-        message: 'すべての項目に入力してください（0は不可）',
+        message: 'すべての項目を入力してください',
         severity: 'error'
       });
       return;
