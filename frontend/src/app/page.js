@@ -39,7 +39,7 @@ export default function Home() {
       <div className="text-center space-y-8 p-8">
         <Box
           component="img"
-          src="/images/ヘッダー画像.png"
+          src="/images/ヘッダー画像コメント付き.png"
           sx={{
             width: '100%',
             height: 'auto',
@@ -49,9 +49,6 @@ export default function Home() {
             my: 2
           }}
         />
-        <p className="text-xl text-gray-700 mb-6">
-          日々の営業を効率的に
-        </p>
         <div className="space-x-4">
           <button
             onClick={() => router.push('/login')}
