@@ -1335,6 +1335,9 @@ export default function HomeDashboard() {
                     p: { xs: 1, md: 3 },  // モバイルではパディングを小さく
                   }}>
                     <Typography variant="subtitle1" align="center" gutterBottom sx={{
+                      fontWeight: 600,
+                      color: '#262724',
+                      mb: 2,
                       fontSize: { xs: '0.9rem', md: '1rem' }  // モバイルではフォントサイズを小さく
                     }}>
                       当日パフォーマンス比率
