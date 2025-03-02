@@ -541,6 +541,9 @@ export default function HomeDashboard() {
   // 目標設定を保存
   const handleSaveTarget = async () => {
     try {
+      // ローディング開始
+      setLoading(true);
+      
       let url = `${API_BASE_URL}/api/monthly-target/${getCurrentYearMonth()}/`;
       
       const response = await fetch(
@@ -578,6 +581,9 @@ export default function HomeDashboard() {
         message: 'エラーが発生しました',
         severity: 'error'
       });
+    } finally {
+      // ローディング終了
+      setLoading(false);
     }
   };
 
@@ -1765,16 +1771,17 @@ export default function HomeDashboard() {
 
           <DialogActions sx={{ 
             width: '100%',
-            pt: { xs: 1, md: 2 },  // モバイルではパディングを小さく
+            pt: { xs: 1, md: 2 },
             px: 0,
-            justifyContent: 'center',  // ボタンを中央揃え
-            gap: { xs: 1, md: 2 }  // モバイルではギャップを小さく
+            justifyContent: 'center',
+            gap: { xs: 1, md: 2 }
           }}>
             <Button 
               onClick={() => setTargetDialog(false)}
+              disabled={loading}
               sx={{
                 color: '#666',
-                fontSize: { xs: '0.85rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.85rem', md: '0.875rem' },
                 '&:hover': {
                   backgroundColor: alpha('#3B82F6', 0.1)
                 }
@@ -1785,16 +1792,31 @@ export default function HomeDashboard() {
             <Button 
               onClick={handleSaveTarget}
               variant="contained"
+              disabled={loading}
               sx={{
                 backgroundColor: '#3B82F6',
                 borderRadius: '8px',
-                fontSize: { xs: '0.85rem', md: '0.875rem' },  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.85rem', md: '0.875rem' },
+                minWidth: '80px',
+                position: 'relative',
                 '&:hover': {
                   backgroundColor: alpha('#3B82F6', 0.8)
                 }
               }}
             >
-              保存
+              {loading ? (
+                <CircularProgress 
+                  size={24} 
+                  sx={{
+                    color: '#fff',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />
+              ) : '保存'}
             </Button>
           </DialogActions>
         </Box>
