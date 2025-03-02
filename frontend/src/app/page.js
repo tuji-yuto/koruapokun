@@ -44,7 +44,7 @@ export default function Home() {
             width: '100%',
             height: 'auto',
             maxWidth: '1300px',
-            maxHeight: '350px',
+            maxHeight: '450px',
             objectFit: 'contain',
             my: 2
           }}
