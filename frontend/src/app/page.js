@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
+import { Box } from '@mui/material';
 
 export default function Home() {
   const router = useRouter();
@@ -39,9 +40,19 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           営業活動管理アプリへようこそ
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          効率的な営業活動の管理と分析をサポートします
-        </p>
+        <Box
+          component="img"
+          src="/images/ヘッダー画像.png"
+          alt="効率的な営業活動の管理と分析をサポートします"
+          sx={{
+            width: '100%',
+            height: 'auto',
+            maxWidth: '2600px',
+            maxHeight: '700px',
+            objectFit: 'contain',
+            my: 2
+          }}
+        />
         <div className="space-x-4">
           <button
             onClick={() => router.push('/login')}
