@@ -37,13 +37,9 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-50">
       <div className="text-center space-y-8 p-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          営業活動管理アプリへようこそ
-        </h1>
         <Box
           component="img"
           src="/images/ヘッダー画像.png"
-          alt="効率的な営業活動の管理と分析をサポートします"
           sx={{
             width: '100%',
             height: 'auto',
@@ -53,6 +49,9 @@ export default function Home() {
             my: 2
           }}
         />
+        <p className="text-xl text-gray-700 mb-6">
+          日々の営業を効率的に
+        </p>
         <div className="space-x-4">
           <button
             onClick={() => router.push('/login')}
