@@ -258,13 +258,6 @@ export default function LoginForm() {
                           安全なパスワードは、大文字・小文字・数字・特殊文字を含み、一般的なパターンを避けたものです。
                           また、他のサイトで使用したことのないパスワードを使用することをお勧めします。
                         </Typography>
-                        <Box sx={{ mt: 1 }}>
-                          <Tooltip title="パスワードが安全でないと思われる場合は、新規登録して安全なパスワードを設定することをお勧めします。" arrow>
-                            <IconButton size="small" sx={{ ml: 0.5 }}>
-                              <InfoIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
                       </Box>
                     </Box>
                   </Grid>
