@@ -1295,14 +1295,8 @@ export default function HomeDashboard() {
                         </TableRow>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>電話対応数</TableCell>
-                          <TableCell align="right" sx={{ 
-                            color: '#262724',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            gap: 1
-                          }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <TableCell align="right" sx={{ color: '#262724' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
                               {isCatchSufficient ? (
                                 <img 
                                   src="/images/太陽アイコン.png" 
@@ -1325,7 +1319,7 @@ export default function HomeDashboard() {
                                 />
                               )}
                               {isCatchSufficient ? '足りている' : '足りていない'} {dailyPerformance.details.daily_catch || 0}
-                            </Box>
+                            </span>
                           </TableCell>
                         </TableRow>
                         <TableRow>
@@ -1346,14 +1340,8 @@ export default function HomeDashboard() {
                         </TableRow>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>獲得数</TableCell>
-                          <TableCell align="right" sx={{ 
-                            color: '#262724',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            gap: 1
-                          }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <TableCell align="right" sx={{ color: '#262724' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
                               {isAcquisitionSufficient ? (
                                 <img 
                                   src="/images/太陽アイコン.png" 
@@ -1376,7 +1364,7 @@ export default function HomeDashboard() {
                                 />
                               )}
                               {isAcquisitionSufficient ? '足りている' : '足りていない'} {dailyPerformance.details.daily_acquisition || 0}
-                            </Box>
+                            </span>
                           </TableCell>
                         </TableRow>
                       </TableBody>
@@ -1537,14 +1525,8 @@ export default function HomeDashboard() {
                         </TableRow>
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>獲得数</TableCell>
-                          <TableCell align="right" sx={{ 
-                            color: '#262724',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            gap: 1
-                          }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <TableCell align="right" sx={{ color: '#262724' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
                               {isAcquisitionSufficient ? (
                                 <img 
                                   src="/images/太陽アイコン.png" 
@@ -1567,7 +1549,7 @@ export default function HomeDashboard() {
                                 />
                               )}
                               {isAcquisitionSufficient ? '足りている' : '足りていない'} {monthlyPerformance.details.total_acquisition || 0}
-                            </Box>
+                            </span>
                           </TableCell>
                         </TableRow>
                       </TableBody>
