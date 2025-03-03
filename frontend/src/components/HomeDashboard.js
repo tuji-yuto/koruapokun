@@ -1035,7 +1035,7 @@ export default function HomeDashboard() {
                 color: '#262724',
                 fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを統一
               }}>
-                進捗率<br />{progressRate.toFixed(1)}%
+                進捗率{progressRate.toFixed(1)}%
               </Typography>
             </Box>
           </Grid>
