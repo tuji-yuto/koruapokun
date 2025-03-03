@@ -991,7 +991,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '8.5rem' }  // フォントサイズを小さく調整
               }}>
                 今月の獲得数<br />{actual}件
               </Typography>
@@ -1049,14 +1049,13 @@ export default function HomeDashboard() {
                 color: '#262724',
                 fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
               }}>
-                達成率
+                達成率：{achievementRate}%
               </Typography>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
                 fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
               }}>
-                {achievementRate}%
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <ProgressDisplay 
