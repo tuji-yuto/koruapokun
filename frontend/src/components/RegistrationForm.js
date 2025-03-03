@@ -282,6 +282,13 @@ export default function RegistrationForm() {
                         </InputAdornment>
                       ),
                     }}
+                    inputProps={{
+                      lang: 'ja',
+                      style: { 
+                        fontSize: '1.2rem',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+                      }
+                    }}
                   />
                 </Grid>
 
