@@ -953,11 +953,11 @@ export default function HomeDashboard() {
         >
           {new Date().getMonth() + 1}月の目標
         </Typography>
-        <Grid container spacing={{ xs: 2, md: 3 }} alignItems="center">
+        <Grid container spacing={{ xs: 1, md: 2 }} alignItems="center">
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 },
+              p: { xs: 1.5, md: 2 },
               display: 'flex',
               alignItems: 'center',
               gap: 1
@@ -965,7 +965,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを1.1remに変更
               }}>
                 目標獲得数<br />{target}件
               </Typography>
@@ -986,12 +986,12 @@ export default function HomeDashboard() {
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }
+              p: { xs: 1.5, md: 2 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
+                fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを1.1remに変更
               }}>
                 今月の獲得数<br />{actual}件
               </Typography>
@@ -1000,12 +1000,12 @@ export default function HomeDashboard() {
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }
+              p: { xs: 1.5, md: 2 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
+                fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを1.1remに変更
               }}>
                 必要獲得数 日<br />{calculateRequiredAcquisition().toFixed(1)}件
               </Typography>
@@ -1014,12 +1014,12 @@ export default function HomeDashboard() {
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }
+              p: { xs: 1.5, md: 2 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
+                fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを1.1remに変更
               }}>
                 必要対応数 日<br />{calculateRequiredCatch().toFixed(1)}件
               </Typography>
