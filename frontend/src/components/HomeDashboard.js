@@ -991,7 +991,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
                 今月の獲得数<br />{actual}件
               </Typography>
@@ -1005,7 +1005,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
                 必要獲得数 日<br />{calculateRequiredAcquisition().toFixed(1)}件
               </Typography>
@@ -1019,7 +1019,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
                 必要対応数 日<br />{calculateRequiredCatch().toFixed(1)}件
               </Typography>
@@ -1033,7 +1033,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
                 進捗率<br />{progressRate.toFixed(1)}%
               </Typography>
@@ -1047,14 +1047,14 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
                 達成率：{achievementRate}%
               </Typography>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを統一
               }}>
               </Typography>
               <Box sx={{ mt: 1 }}>
