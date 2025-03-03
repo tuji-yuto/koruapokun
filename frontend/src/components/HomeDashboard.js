@@ -954,10 +954,10 @@ export default function HomeDashboard() {
           {new Date().getMonth() + 1}月の目標
         </Typography>
         <Grid container spacing={{ xs: 2, md: 3 }} alignItems="center">
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 },  // モバイルではパディングを小さく
+              p: { xs: 2, md: 3 },
               display: 'flex',
               alignItems: 'center',
               gap: 1
@@ -965,7 +965,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
               }}>
                 目標獲得数: {target}件
               </Typography>
@@ -983,43 +983,71 @@ export default function HomeDashboard() {
               </IconButton>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
+              p: { xs: 2, md: 3 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
               }}>
                 今月の獲得数: {actual}件
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
+              p: { xs: 2, md: 3 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
+              }}>
+                必要獲得数/日: {calculateRequiredAcquisition().toFixed(1)}件
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Box sx={{
+              ...innerBoxStyle,
+              p: { xs: 2, md: 3 }
+            }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
+              }}>
+                必要対応数/日: {calculateRequiredCatch().toFixed(1)}件
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Box sx={{
+              ...innerBoxStyle,
+              p: { xs: 2, md: 3 }
+            }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#262724',
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
               }}>
                 進捗率: {progressRate.toFixed(1)}%
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }  // モバイルではパディングを小さく
+              p: { xs: 2, md: 3 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.9rem', md: '1.25rem' }  // モバイルではフォントサイズを小さく
+                fontSize: { xs: '0.9rem', md: '1.25rem' }
               }}>
                 達成率: {achievementRate}%
               </Typography>
