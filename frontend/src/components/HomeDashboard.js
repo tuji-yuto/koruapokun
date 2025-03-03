@@ -1035,8 +1035,21 @@ export default function HomeDashboard() {
                 color: '#262724',
                 fontSize: { xs: '0.825rem', md: '1.1rem' }  // フォントサイズを統一
               }}>
-                進捗率{progressRate.toFixed(1)}%
+                進捗率：{progressRate.toFixed(1)}%
               </Typography>
+              <Box sx={{ mt: 1 }}>
+                <ProgressDisplay 
+                  value={progressRate}
+                  sx={{
+                    '& .MuiLinearProgress-root': {
+                      background: '#f5f7fa',
+                    },
+                    '& .MuiLinearProgress-bar': {
+                      background: '#3B82F6'
+                    }
+                  }}
+                />
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
