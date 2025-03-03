@@ -1028,7 +1028,7 @@ export default function HomeDashboard() {
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }
+              p: { xs: 1.5, md: 2 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
@@ -1042,7 +1042,7 @@ export default function HomeDashboard() {
           <Grid item xs={12} sm={6} md={2}>
             <Box sx={{
               ...innerBoxStyle,
-              p: { xs: 2, md: 3 }
+              p: { xs: 1.5, md: 2 }
             }}>
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
