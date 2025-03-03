@@ -28,7 +28,6 @@ import {
   VisibilityOff,
   Info as InfoIcon
 } from '@mui/icons-material';
-import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
 import { alpha } from '@mui/material/styles';
@@ -173,12 +172,24 @@ export default function RegistrationForm() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}/api/auth/register/`, data);
+      const response = await fetch(`${API_BASE_URL}/api/auth/register/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '登録に失敗しました');
+      }
+
       setSuccess(true);
       setTimeout(() => router.push('/login'), 2000);
     } catch (err) {
       console.error('Registration error:', err);
-      setError(err.response?.data?.message || '登録に失敗しました');
+      setError(err.message || '登録に失敗しました');
     } finally {
       setLoading(false);
     }
