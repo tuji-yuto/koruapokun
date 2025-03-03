@@ -965,7 +965,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '0.95rem' }  // フォントサイズを小さく調整
               }}>
                 目標獲得数<br />{target}件
               </Typography>
@@ -991,7 +991,7 @@ export default function HomeDashboard() {
               <Typography variant="h6" sx={{ 
                 fontWeight: 600, 
                 color: '#262724',
-                fontSize: { xs: '0.825rem', md: '0.85rem' }  // フォントサイズを小さく調整
+                fontSize: { xs: '0.825rem', md: '1.075rem' }  // フォントサイズを小さく調整
               }}>
                 今月の獲得数<br />{actual}件
               </Typography>
