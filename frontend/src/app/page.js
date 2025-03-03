@@ -2,8 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
-import { Box } from '@mui/material';
+import { 
+  Box, 
+  Button, 
+  Container, 
+  CircularProgress,
+  alpha
+} from '@mui/material';
+import { motion } from 'framer-motion';
+
+// アニメーション設定
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
 
 export default function Home() {
   const router = useRouter();
@@ -27,43 +39,118 @@ export default function Home() {
   
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>読み込み中...</p>
-      </div>
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          minHeight: '100vh',
+          background: 'linear-gradient(180deg, #FFFFFF 0%, #EBF5FF 100%)'
+        }}
+      >
+        <CircularProgress />
+      </Box>
     );
   }
 
   // 未ログインユーザー向けのランディングページ
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <div className="text-center space-y-8 p-8">
-        <Box
-          component="img"
-          src="/images/ヘッダー画像コメント付き.png"
-          sx={{
-            width: '100%',
-            height: 'auto',
-            maxWidth: '1100px',
-            maxHeight: '300px',
-            objectFit: 'contain',
-            my: 2
-          }}
-        />
-        <div className="space-x-4">
-          <button
-            onClick={() => router.push('/login')}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #EBF5FF 100%)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        py: { xs: 4, md: 8 }
+      }}
+    >
+      <Container maxWidth="lg">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <Box
+            sx={{
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4
+            }}
           >
-            ログイン
-          </button>
-          <button
-            onClick={() => router.push('/register')}
-            className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors"
-          >
-            新規会員登録
-          </button>
-        </div>
-      </div>
-    </div>
+            <Box
+              component="img"
+              src="/images/ヘッダー画像コメント付き.png"
+              sx={{
+                width: '100%',
+                height: 'auto',
+                maxWidth: '1100px',
+                maxHeight: '300px',
+                objectFit: 'contain',
+                mb: { xs: 3, md: 4 }
+              }}
+            />
+            
+            <Box
+              sx={{
+                display: 'flex',
+                gap: { xs: 2, md: 3 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                width: { xs: '100%', sm: 'auto' }
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={() => router.push('/login')}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: '8px',
+                  backgroundColor: '#3B82F6',
+                  fontSize: { xs: '1rem', md: '1.1rem' },
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  minWidth: { xs: '100%', sm: '200px' },
+                  '&:hover': {
+                    backgroundColor: alpha('#3B82F6', 0.8),
+                    transform: 'translateY(-1px)',
+                    boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                  }
+                }}
+              >
+                ログイン
+              </Button>
+              
+              <Button
+                variant="outlined"
+                onClick={() => router.push('/register')}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: '8px',
+                  borderColor: '#3B82F6',
+                  color: '#3B82F6',
+                  fontSize: { xs: '1rem', md: '1.1rem' },
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  minWidth: { xs: '100%', sm: '200px' },
+                  '&:hover': {
+                    borderColor: '#3B82F6',
+                    backgroundColor: alpha('#3B82F6', 0.05),
+                    transform: 'translateY(-1px)',
+                    boxShadow: '0 4px 15px rgba(59, 130, 246, 0.1)'
+                  }
+                }}
+              >
+                新規会員登録
+              </Button>
+            </Box>
+          </Box>
+        </motion.div>
+      </Container>
+    </Box>
   );
 }
