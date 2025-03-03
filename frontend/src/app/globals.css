@@ -1,13 +1,7 @@
 /**
  * グローバルCSSファイル
  * アプリケーション全体に適用されるスタイルを定義します。
- * Tailwind CSSの基本設定とカスタム変数を含みます。
  */
-
-/* Tailwind CSSの基本スタイルを読み込み */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* カラー変数（ライトモードのみ） */
 :root {
