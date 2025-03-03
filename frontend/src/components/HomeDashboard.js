@@ -1526,30 +1526,7 @@ export default function HomeDashboard() {
                         <TableRow>
                           <TableCell sx={{ color: '#262724' }}>獲得数</TableCell>
                           <TableCell align="right" sx={{ color: '#262724' }}>
-                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                              {isAcquisitionSufficient ? (
-                                <img 
-                                  src="/images/太陽アイコン.png" 
-                                  alt="足りている" 
-                                  style={{ 
-                                    width: '1.2rem', 
-                                    height: '1.2rem',
-                                    marginRight: '4px'
-                                  }} 
-                                />
-                              ) : (
-                                <img 
-                                  src="/images/雨アイコン.png" 
-                                  alt="足りていない" 
-                                  style={{ 
-                                    width: '1.2rem', 
-                                    height: '1.2rem',
-                                    marginRight: '4px'
-                                  }} 
-                                />
-                              )}
-                              {isAcquisitionSufficient ? '足りている' : '足りていない'} {monthlyPerformance.details.total_acquisition || 0}
-                            </span>
+                            {monthlyPerformance.details.total_acquisition || 0}
                           </TableCell>
                         </TableRow>
                       </TableBody>
